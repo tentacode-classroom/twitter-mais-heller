@@ -20,6 +20,7 @@ class User
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
      */
     private $username;
 
@@ -35,11 +36,17 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message = "Cette adresse '{{ value }}' n'est pas un e-mail valide.",
+     *     checkMX = true
+     * )
      */
     private $email;
 
