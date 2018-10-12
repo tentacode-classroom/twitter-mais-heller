@@ -6,7 +6,7 @@
 
 La ligne suivante : 
 `DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name`
-db_user : l'identifiant de connexion à votre BDD
-db_password : le mot de passe qui correspond à l'utilisateur
-db_name : le nom de la base qui contiendra les tables du projet
+* db_user : l'identifiant de connexion à votre BDD
+* db_password : le mot de passe qui correspond à l'utilisateur
+* db_name : le nom de la base qui contiendra les tables du projet
 
