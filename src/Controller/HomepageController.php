@@ -18,14 +18,9 @@ class HomepageController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index()
-    {
-        return $this->render('homepage.html.twig', [
-            'controller_name' => 'HomepageController',
-        ]);
-    }
 
-    public function new(Request $request, UserPasswordEncoderInterface $encoder)
+
+    public function index(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
 
