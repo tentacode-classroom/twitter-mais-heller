@@ -49,9 +49,17 @@ class User
     private $birthday;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user", cascade={"persist"}))
      */
     private $messages;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Please, upload the profile picture file as a JPG file.")
+     * @Assert\File(mimeTypes={ "application/jpg" })
+     */
+    private $profilePicture;
 
     public function __construct()
     {
@@ -162,6 +170,18 @@ class User
                 $message->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(string $profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
 
         return $this;
     }

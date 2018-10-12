@@ -4,4 +4,11 @@
 
 {% block body %} 
     <h1> Page Home </h1>
+
+    <div class="container_registration"> 
+        {{ form_start(formRegistration) }}
+        {{ form_widget(formRegistration) }}
+        {{ form_end(formRegistration) }}
+    </div>
+
 {% endblock %}
