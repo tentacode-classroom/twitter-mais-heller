@@ -6,13 +6,8 @@
     <h1> Page Home </h1>
 
     <div class="container_registration"> 
-        {{ form_start(form) }}
-        {{ form_row(form.username) }}
-        {{ form_row(form.firstName) }}
-        {{ form_row(form.lastName) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.password) }}
-        {{ form_row(form.profilePicture) }}
-        {{ form_end(form) }}
+        {{ form_start(formRegistration) }}
+        {{ form_widget(formRegistration) }}
+        {{ form_end(formRegistration) }}
     </div>
 {% endblock %}
