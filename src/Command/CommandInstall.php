@@ -39,12 +39,8 @@ class CommandInstall extends Command
         $process = new Process(
             $command
         );
-        $process->start();
+        $process->run();
     }
-
-    $process = new Process('composer require orm-fixtures --dev');
-    $process->run();
-
     
         
     
