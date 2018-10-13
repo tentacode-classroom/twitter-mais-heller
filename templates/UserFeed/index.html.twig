@@ -11,7 +11,7 @@
 	  <!-- User main avatar -->
       <div class="avatar-container">
         <div class="avatar">
-
+            <img src="{{ asset('/uploads/' ~ user.ProfilePicture) }}">
         </div>
       </div>
     </div>
@@ -98,13 +98,13 @@
             <div class="tweet-content">
               <div class="tweet-header">
                 <span class="fullname">
-                  <strong>{{user.username}}</strong>
+                  <a href="/user/{{user.id}}">{{user.username}}</a>
                 </span>
                 <span class="username">@JonVadillo</span>
                 <span class="tweet-time">- {{message.PostDate|date('Y-m-d')}}</span>
               </div>
               <a>
-                <img class="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="">
+                <img class="tweet-card-avatar" src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" alt="">
               </a>
               <div class="tweet-text">
                 <p class="" data-aria-label-part="0">{{message.content}}

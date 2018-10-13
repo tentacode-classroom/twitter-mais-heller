@@ -80,21 +80,28 @@ body {
   
   /* Main avatar */
   .avatar-container {
-    top: 220px;
+    top: 210px;
     left: 10px;
     position: absolute;
     transition: bottom .3s;
     z-index: 3;
+    border: 5px solid white;
+    border-radius: 50%;
   }
   
   .avatar {
     background: #fff;
-    background-image: url(https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_400x400.jpg);
-    border: 5px solid #fff;
+    border: 0;
     border-radius: 50%;
     height: 200px;
     position: relative;
     width: 200px;
+  }
+
+  .avatar img {
+    width:200px;
+    height:200px;
+    border-radius:50%;
   }
   /* END: Main avatar */
   
