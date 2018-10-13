@@ -278,6 +278,11 @@ body {
   .btn-follow:hover {
     background-color: #E8F5FD;
   }
+
+.dropdown-menu{
+  margin-left: -40px;
+}
+
   /* END: Right column*/
   
   /* END: Main content elements' styles */
