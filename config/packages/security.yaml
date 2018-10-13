@@ -1,7 +1,7 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        shopping_provider:
+        heller_provider:
             entity:
                 class: App\Entity\User
                 property: email
@@ -17,6 +17,7 @@ security:
             security: false
         main:
             anonymous: true
+            provider: heller_provider
 
             # activate different ways to authenticate
 
@@ -34,7 +35,6 @@ security:
             # form_login: true
             # https://symfony.com/doc/current/security/form_login_setup.html
 
-            provider: shopping_provider
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

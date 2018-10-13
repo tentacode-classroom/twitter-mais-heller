@@ -63,6 +63,9 @@ class User implements UserInterface, \Serializable
      */
     private $profilePicture;
 
+    /**
+     * @ORM\Column(type="simple_array")
+     */
     private $roles = ['ROLE_USER'];
 
     public function __construct()
@@ -77,7 +80,7 @@ class User implements UserInterface, \Serializable
 
     public function getUsername(): ?string
     {
-        return $this->username;
+        return $this->email;
     }
 
     public function setUsername(string $username): self
