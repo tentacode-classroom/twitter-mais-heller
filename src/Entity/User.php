@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -57,7 +58,7 @@ class User
      * @ORM\Column(type="string", length=255)
      *
      * @Assert\NotBlank(message="Please, upload the profile picture file as a JPG file.")
-     * @Assert\File(mimeTypes={ "application/jpg" })
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/jpg", "image/png" })
      */
     private $profilePicture;
 
@@ -174,12 +175,12 @@ class User
         return $this;
     }
 
-    public function getProfilePicture(): ?string
+    public function getProfilePicture()
     {
         return $this->profilePicture;
     }
 
-    public function setProfilePicture(string $profilePicture): self
+    public function setProfilePicture($profilePicture)
     {
         $this->profilePicture = $profilePicture;
 

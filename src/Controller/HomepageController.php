@@ -40,8 +40,13 @@ class HomepageController extends AbstractController
             $user = $formRegistration->getData();
             
             $plainPassword = $user->getPassword();
-            $encryptedPassword = $encoder->encodePassword($user, $plainPassword);
-            $user->setPassword($encryptedPassword);
+            $user->setPassword($plainPassword);
+
+            $file = $user->getProfilePicture();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('upload_directory'), $fileName);
+            $user->setProfilePicture($fileName);
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
