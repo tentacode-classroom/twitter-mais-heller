@@ -110,6 +110,9 @@
                 </span>
                 
                 <span class="tweet-time">- {{message.PostDate|date('Y-m-d')}}</span>
+                {% if app.user.id in '/user/'~user.id %}
+                <a href="{{ path('delete_message', {'messageId': message.id }) }}">Delete</a>
+                {% endif %}
               </div>
               <a>
                 <img class="tweet-card-avatar" src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" alt="">

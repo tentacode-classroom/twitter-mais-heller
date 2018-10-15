@@ -54,11 +54,12 @@ class HomepageController extends AbstractController
             ->setBody('Vous avez été inscrit(e) à Heller ! Bienvenue dans notre communauté !');
             
             $mailer->send($message);
-
+        }
             return $this->render('homepage.html.twig', array(
+                'user' => $user,
                 'formRegistration' => $formRegistration->createView(),
             ));
-        }
+       
     }
 
 }
