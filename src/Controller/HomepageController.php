@@ -51,14 +51,14 @@ class HomepageController extends AbstractController
             $message = (new \Swift_Message('Inscription Heller'))
             ->setFrom('send@example.com')
             ->setTo($userMail)
-            ->setBody('Vous avez été inscrit(e) à Heller ! Bienvenue dans notre communauté !')
+            ->setBody('Vous avez été inscrit(e) à Heller ! Bienvenue dans notre communauté !');
 
             $mailer->send($message);
-
-            return $this->render('homepage.html.twig', array(
-                'formRegistration' => $formRegistration->createView(),
-            ));
         }
+
+        return $this->render('homepage.html.twig', array(
+            'formRegistration' => $formRegistration->createView(),
+        ));
     }
 
 }
