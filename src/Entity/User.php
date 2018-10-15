@@ -76,7 +76,7 @@ class User implements UserInterface, \Serializable
     private $roles = ['ROLE_USER'];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true))
+     * @ORM\Column(type="string", length=255))
      *
      * @Assert\File(mimeTypes={ "image/jpeg", "image/jpg", "image/png" })
      */
@@ -259,12 +259,12 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getBannerPicture(): ?string
+    public function getBannerPicture()
     {
         return $this->bannerPicture;
     }
 
-    public function setBannerPicture(?string $bannerPicture): self
+    public function setBannerPicture($bannerPicture): self
     {
         $this->bannerPicture = $bannerPicture;
 
