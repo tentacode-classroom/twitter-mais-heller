@@ -27,6 +27,8 @@ security:
             form_login:
                 login_path: login
                 check_path: login
+                username_parameter: _email
+                password_parameter: _password
 
             logout:
                 path:   /logout
