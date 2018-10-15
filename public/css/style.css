@@ -284,6 +284,14 @@ body {
 }
 
   /* END: Right column*/
+
+  /* Message flash */
+.flash_registration_success {
+  background-color: rgba(46, 232, 9, 0.5);
+  color : white;
+  font-weight: bold;
+}
+  /* END: Message flash */
   
   /* END: Main content elements' styles */
   

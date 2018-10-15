@@ -40,6 +40,11 @@ class HomepageController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $this->addFlash(
+                'registration_success',
+                'Vous avez été inscrit(e) !'
+            );
+
             return $this->redirectToRoute('homepage');
         }
 
