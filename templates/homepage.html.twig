@@ -3,6 +3,13 @@
 {% block title %}Heller {% endblock %}
 
 {% block body %} 
+
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <h1> Page Home </h1>
 
     <div class="container_registration"> 
