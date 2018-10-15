@@ -25,6 +25,7 @@ class RegistrationType extends AbstractType
         ->add('email', EmailType::class, array('label' => 'E-mail : '))
         ->add('password', PasswordType::class, array('label' => 'Mot de passe : '))
         ->add('profilePicture', FileType::class, array('label' => 'Photo de profil : '))
+        ->add('bannerPicture', FileType::class, array('label' => 'Bannière : '))
         ->add('save', SubmitType::class, array('label' => 'S\'inscrire'))
         ;
     }
