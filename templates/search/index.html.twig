@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+    <h1> Search </h1>
+
+    <div >
+        {{ form_start(formSearch) }}
+        {{ form_widget(formSearch) }}
+        {{ form_end(formSearch) }}
+    </div>
+
+{% endblock %}
