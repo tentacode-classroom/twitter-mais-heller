@@ -5,40 +5,22 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
+use App\Form\RegistrationType;
 
 class HomepageController extends AbstractController
 {
     /**
      * @Route("/", name="homepage")
      */
-    public function index()
-    {
-        return $this->render('homepage.html.twig', [
-            'controller_name' => 'HomepageController',
-        ]);
-    }
 
-    public function new(Request $request, UserPasswordEncoderInterface $encoder)
+
+    public function index(Request $request, \Swift_Mailer $mailer, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
 
-        $formRegistration = $this->createFormBuilder($user)
-            ->add('username', TextType::class, array('label' => 'Nom d\'utilisateur : '))
-            ->add('firstName', TextType::class, array('label' => 'Prénom : '))
-            ->add('lastName', TextType::class, array('label' => 'Nom de famille : '))
-            ->add('email', EmailType::class, array('label' => 'E-mail : '))
-            ->add('password', PasswordType::class, array('label' => 'Mot de passe : '))
-            ->add('profilePicture', FileType::class, array('label' => 'Photo de profil : '))
-            ->add('save', SubmitType::class, array('label' => 'S\'inscrire'))
-            ->getForm();
-
+        $formRegistration = $this->createForm(RegistrationType::class, $user);
         $formRegistration->handleRequest($request);
 
         if ($formRegistration->isSubmitted() && $formRegistration->isValid()) {
@@ -48,15 +30,35 @@ class HomepageController extends AbstractController
             $encryptedPassword = $encoder->encodePassword($user, $plainPassword);
             $user->setPassword($encryptedPassword);
 
+            $file = $user->getProfilePicture();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('upload_directory'), $fileName);
+            $user->setProfilePicture($fileName);
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('homepage');
-        }
+            // affichage du message flash pour confirmer l'inscription
+            $this->addFlash(
+                'registration_success',
+                'Vous avez été inscrit(e) !'
+            );
 
-        return $this->render('homepage.html.twig', array(
-            'formRegistration' => $formRegistration->createView(),
-        ));
+            // envoi d'un mail pour confirmer l'inscription
+            $userMail = $user->getEmail();
+            $message = (new \Swift_Message('Inscription Heller'))
+            ->setFrom('send@example.com')
+            ->setTo($userMail)
+            ->setBody('Vous avez été inscrit(e) à Heller ! Bienvenue dans notre communauté !')
+
+            $mailer->send($message);
+
+            return $this->render('homepage.html.twig', array(
+                'formRegistration' => $formRegistration->createView(),
+            ));
+        }
     }
+
 }

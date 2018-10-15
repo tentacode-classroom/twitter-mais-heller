@@ -5,11 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -22,7 +24,7 @@ class User
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      */
-    private $username;
+    private $profileName;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -56,17 +58,30 @@ class User
     private $birthday;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user", cascade={"persist"}))
      */
     private $messages;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Assert\NotBlank(message="Please, upload the profile picture file as a JPG file.")
-     * @Assert\File(mimeTypes={ "application/jpg" })
+     * @Assert\NotBlank(message="Please, upload a picture.")
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/jpg", "image/png" })
      */
     private $profilePicture;
+
+    /**
+     * @ORM\Column(type="simple_array")
+     */
+    private $roles = ['ROLE_USER'];
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Please, upload a picture.")
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/jpg", "image/png" })
+     */
+    private $bannerPicture;
 
     public function __construct()
     {
@@ -80,14 +95,19 @@ class User
 
     public function getUsername(): ?string
     {
-        return $this->username;
+        return $this->email;
     }
 
-    public function setUsername(string $username): self
+    public function setProfileName(string $profileName): self
     {
-        $this->username = $username;
+        $this->profileName = $profileName;
 
         return $this;
+    }
+
+    public function getProfileName(): ?string
+    {
+        return $this->profileName;
     }
 
     public function getFirstName(): ?string
@@ -181,14 +201,73 @@ class User
         return $this;
     }
 
-    public function getProfilePicture(): ?string
+    public function getProfilePicture()
     {
         return $this->profilePicture;
     }
 
-    public function setProfilePicture(string $profilePicture): self
+    public function setProfilePicture($profilePicture)
     {
         $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    public function getRoles(): ?array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getBannerPicture(): ?string
+    {
+        return $this->bannerPicture;
+    }
+
+    public function setBannerPicture(?string $bannerPicture): self
+    {
+        $this->bannerPicture = $bannerPicture;
 
         return $this;
     }
