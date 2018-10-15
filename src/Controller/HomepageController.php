@@ -53,7 +53,7 @@ class HomepageController extends AbstractController
             // envoi d'un mail pour confirmer l'inscription
             $userMail = $user->getEmail();
             $message = (new \Swift_Message('Inscription Heller'))
-            ->setFrom('send@example.com')
+            ->setFrom('kekedu42@gmail.com')
             ->setTo($userMail)
             ->setBody('Vous avez été inscrit(e) à Heller ! Bienvenue dans notre communauté !');
 

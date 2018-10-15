@@ -4,7 +4,6 @@
 
 
 {% block body %}
-
     {% for message in app.flashes('registration_success') %}
         <div class="flash_registration_success">
             {{ message }}
@@ -18,5 +17,4 @@
         {{ form_widget(formRegistration) }}
         {{ form_end(formRegistration) }}
     </div>
-
 {% endblock %}
