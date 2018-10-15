@@ -67,6 +67,12 @@ class HomepageController extends AbstractController
             'formRegistration' => $formRegistration->createView(),
         ));
 =======
+        }
+            return $this->render('homepage.html.twig', array(
+                'user' => $user,
+                'formRegistration' => $formRegistration->createView(),
+            ));
+       
 >>>>>>> 51dfef156bff463053b9640a89d83f0225fc1e7d
     }
 
