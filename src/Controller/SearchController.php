@@ -14,8 +14,16 @@ class SearchController extends AbstractController
      */
     public function index(Request $request)
     {
+        $users = new User();
+
         $formSearch = $this->createForm(SearchUserType::class);
         $formSearch->handleRequest($request);
+
+        if ($formSearch->isSubmitted() && $formSearch->isValid()) {
+            $usersearch = $formSearch->getData();
+            $users -> findAll();
+
+        }
 
         return $this->render('search/index.html.twig', array(
             'formSearch' => $formSearch->createView(),
