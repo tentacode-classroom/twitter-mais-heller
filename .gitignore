@@ -15,5 +15,5 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
-public/uploads
 .idea
+public/uploads
