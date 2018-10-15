@@ -11,13 +11,13 @@
         <a class="nav-link" href="{{path("homepage")}}"><i class="octicon octicon-home" aria-hidden="true"></i> Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="octicon octicon-zap"></i> Moments</a>
+        <a class="nav-link" href="{{path("homepage")}}"><i class="octicon octicon-zap"></i> Moments</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="octicon octicon-bell"></i> Notifications</a>
+        <a class="nav-link" href="{{path("homepage")}}"><i class="octicon octicon-bell"></i> Notifications</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="octicon octicon-inbox"></i> Messages</a>
+        <a class="nav-link" href="{{path("homepage")}}"><i class="octicon octicon-inbox"></i> Messages</a>
       </li>
     </ul>
     <!-- END: Navbar navigation links -->
@@ -35,7 +35,7 @@
     <div class="dropdown navbar-user-dropdown">
       <button class="btn btn-secondary dropdown-toggle btn-circle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  <img class="dropdown-button" src="{{ asset('/uploads/' ~ user.ProfilePicture) }}"></button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="/user/{{app.user.id}}"">Profile</a>
+        <a class="dropdown-item" href="/user/{{app.user.id}}">Profile</a>
         <a class="dropdown-item" href="{{path('logout')}}">Logout</a>
       </div>
     </div>
