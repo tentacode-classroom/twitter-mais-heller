@@ -295,7 +295,7 @@ body {
 
   /* Message flash */
 .flash_registration_success {
-  background-color: rgba(46, 232, 9, 0.5);
+  background-color: rgba(46, 232, 9, 0.4);
   color : white;
   font-weight: bold;
 }

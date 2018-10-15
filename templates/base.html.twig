@@ -17,12 +17,6 @@
         {{ include('Layout/menu.html.twig') }}
     {% endif %}
 
-    {% for message in app.flashes('registration_success') %}
-        <div class="flash_registration_success">
-            {{ message }}
-        </div>
-    {% endfor %}
-
     {% block body %}{% endblock %}
 
     {% block javascripts %}

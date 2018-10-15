@@ -16,7 +16,7 @@ class HomepageController extends AbstractController
      */
 
 
-    public function index(Request $request, UserPasswordEncoderInterface $encoder)
+    public function index(Request $request, \Swift_Mailer $mailer, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
 
@@ -40,17 +40,25 @@ class HomepageController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            // affichage du message flash pour confirmer l'inscription
             $this->addFlash(
                 'registration_success',
                 'Vous avez été inscrit(e) !'
             );
 
-            return $this->redirectToRoute('homepage');
-        }
+            // envoi d'un mail pour confirmer l'inscription
+            $userMail = $user->getEmail();
+            $message = (new \Swift_Message('Inscription Heller'))
+            ->setFrom('send@example.com')
+            ->setTo($userMail)
+            ->setBody('Vous avez été inscrit(e) à Heller ! Bienvenue dans notre communauté !')
 
-        return $this->render('homepage.html.twig', array(
-            'formRegistration' => $formRegistration->createView(),
-        ));
+            $mailer->send($message);
+
+            return $this->render('homepage.html.twig', array(
+                'formRegistration' => $formRegistration->createView(),
+            ));
+        }
     }
 
 }
