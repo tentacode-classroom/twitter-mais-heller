@@ -76,9 +76,8 @@ class User implements UserInterface, \Serializable
     private $roles = ['ROLE_USER'];
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true))
      *
-     * @Assert\NotBlank(message="Please, upload a picture.")
      * @Assert\File(mimeTypes={ "image/jpeg", "image/jpg", "image/png" })
      */
     private $bannerPicture;

@@ -35,7 +35,6 @@ class HomepageController extends AbstractController
             $file->move($this->getParameter('upload_directory'), $fileName);
             $user->setProfilePicture($fileName);
 
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -57,6 +56,7 @@ class HomepageController extends AbstractController
         }
 
         return $this->render('homepage.html.twig', array(
+            'user' => $user,
             'formRegistration' => $formRegistration->createView(),
         ));
     }
