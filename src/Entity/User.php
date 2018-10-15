@@ -22,6 +22,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
      */
     private $profileName;
 
@@ -37,11 +38,17 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message = "Cette adresse '{{ value }}' n'est pas un e-mail valide.",
+     *     checkMX = true
+     * )
      */
     private $email;
 
@@ -69,9 +76,8 @@ class User implements UserInterface, \Serializable
     private $roles = ['ROLE_USER'];
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true))
      *
-     * @Assert\NotBlank(message="Please, upload a picture.")
      * @Assert\File(mimeTypes={ "image/jpeg", "image/jpg", "image/png" })
      */
     private $bannerPicture;
