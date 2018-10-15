@@ -58,7 +58,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Assert\NotBlank(message="Please, upload the profile picture file as a JPG file.")
+     * @Assert\NotBlank(message="Please, upload a picture.")
      * @Assert\File(mimeTypes={ "image/jpeg", "image/jpg", "image/png" })
      */
     private $profilePicture;
@@ -67,6 +67,14 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="simple_array")
      */
     private $roles = ['ROLE_USER'];
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Please, upload a picture.")
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/jpg", "image/png" })
+     */
+    private $bannerPicture;
 
     public function __construct()
     {
@@ -241,6 +249,18 @@ class User implements UserInterface, \Serializable
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getBannerPicture(): ?string
+    {
+        return $this->bannerPicture;
+    }
+
+    public function setBannerPicture(?string $bannerPicture): self
+    {
+        $this->bannerPicture = $bannerPicture;
 
         return $this;
     }

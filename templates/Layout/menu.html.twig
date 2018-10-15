@@ -33,7 +33,7 @@
     <!-- END: Navbar Search form -->
     <!-- Navbar User menu -->
     <div class="dropdown navbar-user-dropdown">
-      <button class="btn btn-secondary dropdown-toggle btn-circle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+      <button class="btn btn-secondary dropdown-toggle btn-circle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  <img class="dropdown-button" src="{{ asset('/uploads/' ~ user.ProfilePicture) }}"></button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="/user/{{app.user.id}}"">Profile</a>
         <a class="dropdown-item" href="{{path('logout')}}">Logout</a>
