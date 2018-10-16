@@ -60,7 +60,7 @@ class User implements UserInterface, \Serializable
     private $birthday;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user", cascade={"persist"}))
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user", fetch="EAGER", cascade={"persist"}))
      */
     private $messages;
 
@@ -86,7 +86,7 @@ class User implements UserInterface, \Serializable
     private $bannerPicture;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Friend", mappedBy="follower", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Friend", mappedBy="follower", cascade={"persist", "remove"})
      */
     private $follower;
 

@@ -7,14 +7,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
+use App\Entity\Friend;
 use App\Form\RegistrationType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
 
 class HomepageController extends AbstractController
 {
     /**
      * @Route("/", name="homepage")
      */
-    public function index(Request $request, \Swift_Mailer $mailer, UserPasswordEncoderInterface $encoder)
+    public function index(Request $request, \Swift_Mailer $mailer, UserPasswordEncoderInterface $encoder, TokenStorageInterface $tokenStorage)
     {
         $user = new User();
 
@@ -60,9 +63,26 @@ class HomepageController extends AbstractController
 
             $mailer->send($message);
         }
+        $loggedUser=$tokenStorage->getToken()->getUser();
+        if($loggedUser != "anon."){
+        dump($loggedUser);
+/*
+        $loggedUser = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find($userId);
+*/
+        $loggedUser->followers = $this->getDoctrine()
+        ->getRepository(Friend::class)
+        ->findFollowers($loggedUser);
+
+        $loggedUser->followings = $this->getDoctrine()
+        ->getRepository(Friend::class)
+        ->findFollowings($loggedUser);
+        }
+        
 
         return $this->render('homepage.html.twig', array(
-            'user' => $user,
+            'user' => $loggedUser,
             'formRegistration' => $formRegistration->createView(),
         ));
        

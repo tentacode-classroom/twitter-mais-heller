@@ -1,11 +1,14 @@
 <?php
-
+ 
 namespace App\Entity;
-
+ 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+ 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FriendRepository")
+ * @UniqueEntity(fields={"follower","following"}, message="Vous suivez déjà cette personne")
  */
 class Friend
 {
@@ -15,14 +18,16 @@ class Friend
      * @ORM\Column(type="integer")
      */
     private $id;
-
+ 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="follower", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="follower", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $follower;
-
+     
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})    
+     * @ORM\JoinColumn(nullable=false)
      */
     private $following;
 

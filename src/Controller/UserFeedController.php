@@ -27,8 +27,6 @@ class UserFeedController extends AbstractController
         ->getRepository(Friend::class)
         ->findFollowings($user);
 
-        dump($user->followings);
-
         $message = new Message();
         $formMessage = $this->createForm(MessageType::class, $message);
         $formMessage->handleRequest($request);
