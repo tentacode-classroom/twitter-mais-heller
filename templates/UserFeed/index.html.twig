@@ -4,6 +4,8 @@
 
 {% include 'Layout/menu.html.twig' %}
 
+{% form_theme formMessage 'bootstrap_4_layout.html.twig' %}
+
 <div class="main-container">
   <!-- Profile background large image -->
   <div class="profile-background">
@@ -64,9 +66,8 @@
         <div class="profile-header">
           <!-- Header information -->
           <h3 class="profile-fullname"><a>{{user.ProfileName}}<a></h3>
-          <h2 class="profile-element"><a>@jonvadillo</a></h2>
-          <a class="profile-element profile-website" hrerf=""><i class="octicon octicon-link"></i>&nbsp;jonvadillo.com</a>
-          <a class="profile-element profile-website" hrerf=""><i class="octicon octicon-location"></i>&nbsp;Vitoria-Gasteiz, Spain</a>
+          <a class="profile-element profile-website" hrerf=""><i class="octicon octicon-link"></i>&nbsp;</a>
+          <a class="profile-element profile-website" hrerf=""><i class="octicon octicon-location"></i>&nbsp;</a>
           <h2 class="profile-element"><i class="octicon octicon-calendar"></i>Joined November 2012</h2>
           <button class="btn btn-search-bar tweet-to-btn">Tweet to {{user.ProfileName}}</button>
           <a class="profile-element profile-website" hrerf=""><i class="octicon octicon-file-media"></i>1,142 Photos and videos</a>
@@ -93,15 +94,25 @@
       <div class="col-6">
         <ol class="tweet-list">
 
-{% for message in user.messages %}
+<li class="tweet-card">
+        {{ form_start(formMessage) }}
+        {{ form_widget(formMessage) }}
+        {{ form_end(formMessage) }}
+        </li>
+
+
+{% for message in user.messages|reverse %}
           <li class="tweet-card">
             <div class="tweet-content">
               <div class="tweet-header">
                 <span class="fullname">
                   <a href="/user/{{user.id}}">{{user.ProfileName}}</a>
                 </span>
-                <span class="username">@JonVadillo</span>
+                
                 <span class="tweet-time">- {{message.PostDate|date('Y-m-d')}}</span>
+                {% if app.user.id in '/user/'~user.id %}
+                <a href="{{ path('delete_message', {'messageId': message.id }) }}">Delete</a>
+                {% endif %}
               </div>
               <a>
                 <img class="tweet-card-avatar" src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" alt="">

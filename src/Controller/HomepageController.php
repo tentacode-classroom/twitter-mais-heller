@@ -60,11 +60,14 @@ class HomepageController extends AbstractController
 
             $mailer->send($message);
         }
+<<<<<<< HEAD
 
         return $this->render('homepage.html.twig', array(
             'user' => $user,
             'formRegistration' => $formRegistration->createView(),
         ));
+=======
+>>>>>>> 5cfc0ad2e054cc29df4616fe21dafc196be6b941
        
     }
 
