@@ -36,13 +36,13 @@
             <li>
               <a>
                 <span class="profile-stats-item profile-stats-item-label">Following</span>
-                <span class="profile-stats-item profile-stats-item-number">420</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.followings|length}}</span>
               </a>
             </li>
             <li>
               <a>
                 <span class="profile-stats-item profile-stats-item-label">Followers</span>
-                <span class="profile-stats-item profile-stats-item-number">583</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.followers|length}}</span>
               </a>
             </li>
             <li>
@@ -54,7 +54,9 @@
           </ul>
         </div>
         <div class="col">
-
+{% if not (app.user.id in '/user/'~user.id) %}
+<a href="{{ path('follow_user', {'userId': user.id }) }}"><button class="btn tweet-to-btn">Follow</button></a>
+{% endif %}
         </div>
       </div>
     </div>
@@ -74,15 +76,15 @@
           <div class="pic-grid">
             <!-- Image grid -->
             <div class="row">
-              <div class="col pic-col"><img src="https://pbs.twimg.com/media/DFCq7iTXkAADXE-.jpg:thumb" height="73px" class=""></div>
-              <div class="col pic-col"><img src="https://pbs.twimg.com/media/DEoQ0vyXoBA1cwQ.png:thumb" height="73px" class=""></div>
-              <div class="col pic-col"><img src="https://pbs.twimg.com/media/DDVbW4RXsAAasuw.jpg:thumb" height="73px" class=""></div>
+              <div class="col pic-col"><img src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" height="73px" class=""></div>
+              <div class="col pic-col"><img src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" height="73px" class=""></div>
+              <div class="col pic-col"><img src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" height="73px" class=""></div>
             </div>
             <!-- End: row -->
             <div class="row">
-              <div class="col pic-col"><img src="https://pbs.twimg.com/media/DFCq7iTXkAADXE-.jpg:thumb" height="73px" class=""></div>
-              <div class="col pic-col"><img src="https://pbs.twimg.com/media/DEoQ0vyXoBA1cwQ.png:thumb" height="73px" class=""></div>
-              <div class="col pic-col"><img src="https://pbs.twimg.com/media/DDVbW4RXsAAasuw.jpg:thumb" height="73px" class=""></div>
+              <div class="col pic-col"><img src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" height="73px" class=""></div>
+              <div class="col pic-col"><img src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" height="73px" class=""></div>
+              <div class="col pic-col"><img src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" height="73px" class=""></div>
             </div>
             <!-- End: row -->
           </div>
@@ -93,12 +95,13 @@
       <!-- Center content column -->
       <div class="col-6">
         <ol class="tweet-list">
-
+{% if app.user.id in '/user/'~user.id %}
 <li class="tweet-card">
         {{ form_start(formMessage) }}
         {{ form_widget(formMessage) }}
         {{ form_end(formMessage) }}
-        </li>
+</li>
+{% endif %}
 
 
 {% for message in user.messages|reverse %}
@@ -150,12 +153,22 @@
             <ol class="tweet-list">
               <li class="tweet-card">
                 <div class="tweet-content">
-                  <img class="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="">
+                  <img class="tweet-card-avatar" src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" alt="">
                   <div class="tweet-header">
                     <span class="fullname">
-                  <strong>Jon Vadillo</strong>
+                  <strong>User1</strong>
+                  </span>
+                  </div>
+                  <button class="btn btn-follow">Follow</button>
+                </div>
+              </li>
+              <li class="tweet-card">
+                <div class="tweet-content">
+                  <img class="tweet-card-avatar" src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" alt="">
+                  <div class="tweet-header">
+                    <span class="fullname">
+                  <strong>User 2</strong>
                 </span>
-                    <span class="username">@JonVadillo</span>
                   </div>
 
                   <button class="btn btn-follow">Follow</button>
@@ -163,25 +176,11 @@
               </li>
               <li class="tweet-card">
                 <div class="tweet-content">
-                  <img class="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="">
+                  <img class="tweet-card-avatar" src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" alt="">
                   <div class="tweet-header">
                     <span class="fullname">
-                  <strong>Jon Vadillo</strong>
+                  <strong>User 3</strong>
                 </span>
-                    <span class="username">@JonVadillo</span>
-                  </div>
-
-                  <button class="btn btn-follow">Follow</button>
-                </div>
-              </li>
-              <li class="tweet-card">
-                <div class="tweet-content">
-                  <img class="tweet-card-avatar" src="https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_bigger.jpg" alt="">
-                  <div class="tweet-header">
-                    <span class="fullname">
-                  <strong>Jon Vadillo</strong>
-                </span>
-                    <span class="username">@JonVadillo</span>
                   </div>
 
                   <button class="btn btn-follow">Follow</button>

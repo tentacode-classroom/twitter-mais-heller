@@ -79,9 +79,17 @@ class User implements UserInterface, \Serializable
      */
     private $bannerPicture;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Friend", mappedBy="follower", cascade={"persist", "remove"})
+     */
+    private $follower;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->following = new ArrayCollection();
+        $this->followers = new ArrayCollection();
+        $this->friend = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -270,5 +278,41 @@ class User implements UserInterface, \Serializable
 
     public function __toString(){
         return "yolo";
+    }
+
+    public function addFriend(Friend $friend): self
+    {
+        if (!$this->friend->contains($friend)) {
+            $this->friend[] = $friend;
+        }
+
+        return $this;
+    }
+
+    public function removeFriend(Friend $friend): self
+    {
+        if ($this->friend->contains($friend)) {
+            $this->friend->removeElement($friend);
+        }
+
+        return $this;
+    }
+
+    public function getFollower(): ?Friend
+    {
+        return $this->follower;
+    }
+
+    public function setFollower(?Friend $follower): self
+    {
+        $this->follower = $follower;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newFollower = $follower === null ? null : $this;
+        if ($newFollower !== $follower->getFollower()) {
+            $follower->setFollower($newFollower);
+        }
+
+        return $this;
     }
 }
