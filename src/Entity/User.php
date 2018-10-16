@@ -264,4 +264,8 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
+
+    public function __toString(){
+        return "yolo";
+    }
 }
