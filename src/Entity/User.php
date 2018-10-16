@@ -11,8 +11,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity("email")
- * @UniqueEntity("profileName")
+ * @UniqueEntity(
+ *  fields={"email"},
+ *  message="Cette adresse e-mail a déjà été utilisée pour un autre compte"
+ * )
+ * @UniqueEntity(
+ *  fields={"profileName"},
+ *  message="Ce pseudo a déjà été utilisé pour un autre compte"
+ * )
  */
 class User implements UserInterface, \Serializable
 {

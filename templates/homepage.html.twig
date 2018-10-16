@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+
+
 {% block title %}Heller {% endblock %}
 
 
@@ -12,11 +14,18 @@
     {% endfor %}
     
     <h1> Page Home </h1>
+    <br>
 
-    <div class="container_registration"> 
-        {{ form_start(formRegistration) }}
-        {{ form_widget(formRegistration) }}
-        {{ form_end(formRegistration) }}
-    </div>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <h3> Actu </h3>
+        <br>
+        <p> Affichage des actus d'amis </p>
+    {% else %}
+        <div class="container_registration"> 
+            {{ form_start(formRegistration) }}
+            {{ form_widget(formRegistration) }}
+            {{ form_end(formRegistration) }}
+        </div>
+    {% endif %}
 
 {% endblock %}
