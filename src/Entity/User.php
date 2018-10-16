@@ -21,7 +21,7 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private $profileName;
 
@@ -41,7 +41,7 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
@@ -253,12 +253,12 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getBannerPicture(): ?string
+    public function getBannerPicture()
     {
         return $this->bannerPicture;
     }
 
-    public function setBannerPicture(?string $bannerPicture): self
+    public function setBannerPicture($bannerPicture): self
     {
         $this->bannerPicture = $bannerPicture;
 
