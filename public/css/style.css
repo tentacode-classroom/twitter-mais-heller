@@ -308,6 +308,12 @@ body {
   color : white;
   font-weight: bold;
 }
+
+/*.form_errors {
+  background-color: rgba(240, 11, 11, 0.4);
+  color : white;
+  font-weight: bold;
+}*/
   /* END: Message flash */
   
   /* END: Main content elements' styles */
