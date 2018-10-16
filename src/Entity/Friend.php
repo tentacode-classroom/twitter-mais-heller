@@ -26,7 +26,7 @@ class Friend
     private $follower;
      
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})    
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $following;
@@ -60,7 +60,8 @@ class Friend
         return $this;
     }
 
-    public function __toString(){
+    public function __toString()
+    {
         return "aa";
     }
 }

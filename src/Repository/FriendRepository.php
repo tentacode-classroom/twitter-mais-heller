@@ -56,5 +56,4 @@ class FriendRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    
 }

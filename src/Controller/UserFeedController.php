@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -8,6 +9,7 @@ use App\Entity\Friend;
 use App\Entity\Message;
 use App\Form\MessageType;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 class UserFeedController extends AbstractController
 {
     /**
@@ -43,7 +45,7 @@ class UserFeedController extends AbstractController
             return $this->redirect($request->getUri());
         }
    
-    return $this->render('UserFeed/index.html.twig', [
+        return $this->render('UserFeed/index.html.twig', [
         'user' => $user,
         'formMessage' => $formMessage->createView(),
         ]);
@@ -51,7 +53,8 @@ class UserFeedController extends AbstractController
     /**
      * @Route("/user/deletemessage/{messageId}", name="delete_message")
      */
-    public function deleteMessage(Message $messageId, UserInterface $user){
+    public function deleteMessage(Message $messageId, UserInterface $user)
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         
@@ -63,7 +66,7 @@ class UserFeedController extends AbstractController
         $query = $queryBuilder->getQuery();
         $message = $query->execute();
         $id = $message[0]->getUser()->getId();
-        if($id != $userId){
+        if ($id != $userId) {
             return $this->redirect('/');
         }
         $queryBuilder->delete(Message::class, 'm')
@@ -79,7 +82,8 @@ class UserFeedController extends AbstractController
     /**
      * @Route("/user/follow/{userId}", name="follow_user")
      */
-    public function followUser(User $userId, UserInterface $user){
+    public function followUser(User $userId, UserInterface $user)
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $followerId = $user->getId();
 
@@ -96,20 +100,20 @@ class UserFeedController extends AbstractController
     /**
      * @Route("/user/unfollow/{userId}", name="unfollow_user")
      */
-    public function unfollowUser(User $userId, UserInterface $user){
+    public function unfollowUser(User $userId, UserInterface $user)
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         $followerId = $user->getId();
 
         $queryBuilder->delete(Friend::class, 'f')
         ->andWhere('f.follower = :follower')
-        ->setParameter(':follower', $followerId)    
-        ->andWhere('f.following = :following') 
-        ->setParameter(':following', $userId);     
+        ->setParameter(':follower', $followerId)
+        ->andWhere('f.following = :following')
+        ->setParameter(':following', $userId);
            $query = $queryBuilder->getQuery();
            $query->execute();
         $userId=$userId->getId();
         return $this->redirect('/user/'.$userId);
     }
-
 }

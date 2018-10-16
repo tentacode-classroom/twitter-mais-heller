@@ -35,14 +35,11 @@ class CommandInstall extends Command
             'composer require orm-fixtures --dev',
         ];
 
-    foreach($commands as $command){
-        $process = new Process(
-            $command
-        );
-        $process->run();
-    }
-    
-        
-    
+        foreach ($commands as $command) {
+            $process = new Process(
+                $command
+            );
+            $process->run();
+        }
     }
 }

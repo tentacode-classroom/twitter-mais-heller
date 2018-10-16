@@ -28,26 +28,27 @@ class HellerExtension extends AbstractExtension
 
     public function compareFollows($userId, $followArray)
     {
-        foreach($followArray as $follow){
-       if(($follow->getFollower()->getId())==$userId->getId()){
-           return true;
-       }
-    }
-    return false;
+        foreach ($followArray as $follow) {
+            if (($follow->getFollower()->getId())==$userId->getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public function getFriendMessages($userId, $followArray){
+    public function getFriendMessages($userId, $followArray)
+    {
 
         $messageArray = [];
 
-        foreach($followArray as $follow){
+        foreach ($followArray as $follow) {
                 $messages = $follow->getFollowing()->getMessages()->toArray();
-                foreach($messages as $message){
-                     array_push($messageArray, $message);
-                }
-         }
+            foreach ($messages as $message) {
+                 array_push($messageArray, $message);
+            }
+        }
 
-            usort($messageArray, function($a, $b) {
+            usort($messageArray, function ($a, $b) {
                 return $a->getPostDate() < $b->getPostDate()  ? 1 : -1;
             });
 
