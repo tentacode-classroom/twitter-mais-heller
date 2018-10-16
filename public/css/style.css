@@ -309,11 +309,16 @@ body {
   font-weight: bold;
 }
 
+.follow-button-container{
+  padding: 0 !important;
+}
+
 /*.form_errors {
   background-color: rgba(240, 11, 11, 0.4);
   color : white;
   font-weight: bold;
 }*/
+
   /* END: Message flash */
   
   /* END: Main content elements' styles */
