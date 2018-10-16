@@ -11,5 +11,17 @@
         {{ form_widget(formSearch) }}
         {{ form_end(formSearch) }}
     </div>
+    <div>
+        {% if users is defined %}
+        {% for user in  users %}
+
+                <div><a href="{{ '/user/'~user.id }}">
+                    {{ user.profileName}}</a>
+                </div>
+
+
+        {% endfor %}
+        {% endif %}
+    </div>
 
 {% endblock %}
