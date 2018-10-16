@@ -7,9 +7,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("email")
+ * @UniqueEntity("profileName")
  */
 class User implements UserInterface, \Serializable
 {
@@ -41,7 +44,7 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=190, unique=true)
      */
     private $email;
 
