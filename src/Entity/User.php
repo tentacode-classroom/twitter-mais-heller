@@ -7,9 +7,18 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *  fields={"email"},
+ *  message="Cette adresse e-mail a déjà été utilisée pour un autre compte"
+ * )
+ * @UniqueEntity(
+ *  fields={"profileName"},
+ *  message="Ce pseudo a déjà été utilisé pour un autre compte"
+ * )
  */
 class User implements UserInterface, \Serializable
 {
@@ -21,7 +30,7 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private $profileName;
 
@@ -41,7 +50,7 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=190, unique=true)
      */
     private $email;
 
@@ -58,7 +67,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Assert\NotBlank(message="Please, upload the profile picture file as a JPG file.")
+     * @Assert\NotBlank(message="Please, upload a picture.")
      * @Assert\File(mimeTypes={ "image/jpeg", "image/jpg", "image/png" })
      */
     private $profilePicture;
@@ -67,6 +76,14 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="simple_array")
      */
     private $roles = ['ROLE_USER'];
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Please, upload a picture.")
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/jpg", "image/png" })
+     */
+    private $bannerPicture;
 
     public function __construct()
     {
@@ -243,5 +260,21 @@ class User implements UserInterface, \Serializable
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function getBannerPicture()
+    {
+        return $this->bannerPicture;
+    }
+
+    public function setBannerPicture($bannerPicture): self
+    {
+        $this->bannerPicture = $bannerPicture;
+
+        return $this;
+    }
+
+    public function __toString(){
+        return "yolo";
     }
 }

@@ -41,10 +41,19 @@ body {
   }
   
   .btn-circle {
+    position: relative;
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    background-image: url(https://pbs.twimg.com/profile_images/679974972278849537/bzzb-6H4_normal.jpg);
+  }
+
+  .dropdown-button{
+    top:0;
+    left:0;
+    position: absolute;
+    border-radius:50%;
+    height:40px;
+    width:40px;
   }
   
   .btn-search-bar {
@@ -75,7 +84,6 @@ body {
   .profile-background {
     width: 100%;
     height: 320px;
-    background-image: url('https://pbs.twimg.com/profile_banners/439335622/1496682615/1500x500');
   }
   
   /* Main avatar */
@@ -202,6 +210,10 @@ body {
     padding: 9px 12px;
   }
   
+  .tweet-text > p{
+    word-wrap:break-word;
+  }
+
   .tweet-content {
     margin-left: 58px;
     font-size: 14px;
@@ -283,7 +295,26 @@ body {
   margin-left: -40px;
 }
 
+.formButton{
+  position:relative;
+  right:0;
+}
+
   /* END: Right column*/
+
+  /* Message flash */
+.flash_registration_success {
+  background-color: rgba(46, 232, 9, 0.4);
+  color : white;
+  font-weight: bold;
+}
+
+/*.form_errors {
+  background-color: rgba(240, 11, 11, 0.4);
+  color : white;
+  font-weight: bold;
+}*/
+  /* END: Message flash */
   
   /* END: Main content elements' styles */
   
