@@ -1,9 +1,6 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block title %}Heller {% endblock %}
-
 
 {% block body %}
 
@@ -15,11 +12,84 @@
     
     <h1> Page Home </h1>
     <br>
+    
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<div class="no-margin row">
+      <div class="col-3">
+      <div class="profile-background">
+    <div class="container tweet-card">
+	  <!-- User main avatar -->
+      <div class="avatar-container menu-container">
+        <div class="avatar">
+            <img src="{{ asset('/uploads/' ~ user.ProfilePicture) }}">
+        </div>
+      </div>
+       <ul class="home-info row tweet-list">
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Tweets</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.messages|length}}</span>
+              </a>
+            </li>
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Following</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.followings|length}}</span>
+              </a>
+            </li>
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Followers</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.followers|length}}</span>
+              </a>
+            </li>
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Likes</span>
+                <span class="profile-stats-item profile-stats-item-number">241</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+  </div>
+      </div>
 
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <h3> Actu </h3>
-        <br>
-        <p> Affichage des actus d'amis </p>
+      <div class="col-6">
+        <ol class="tweet-list menu-list">
+{% for message in getFriendMessages(app.user, user.followings) %}
+          <li class="tweet-card">
+            <div class="tweet-content">
+              <div class="tweet-header">
+                <span class="fullname">
+                  <a href="/user/{{message.user.id}}">{{message.user.ProfileName}}</a>
+                </span>
+                
+                <span class="tweet-time">- {{message.PostDate|date('Y-m-d')}}</span>
+              </div>
+              <a>
+                <img class="tweet-card-avatar" src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" alt="">
+              </a>
+              <div class="tweet-text">
+                <p class="" data-aria-label-part="0">{{message.content}}
+                </p>
+              </div>
+              <div class="tweet-footer">
+                <a class="tweet-footer-btn">
+                  <i class="octicon octicon-comment" aria-hidden="true"></i><span> 0</span>
+                </a>
+                <a class="tweet-footer-btn RT">
+                  <i class="octicon octicon-sync" aria-hidden="true"></i><span> {{message.retweet}}</span>
+                </a>
+                <a class="tweet-footer-btn LIKE">
+                  <i class="octicon octicon-heart" aria-hidden="true"></i><span> {{message.likes}}</span>
+                </a>
+              </div>
+            </div>
+          </li>
+    {% endfor %}
+    </ol>
+    </div>
+    </div>
     {% else %}
         <div class="container_registration"> 
             {{ form_start(formRegistration) }}

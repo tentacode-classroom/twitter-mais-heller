@@ -6,7 +6,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-class FollowExtension extends AbstractExtension
+class HellerExtension extends AbstractExtension
 {
     public function getFilters(): array
     {
@@ -22,6 +22,7 @@ class FollowExtension extends AbstractExtension
     {
         return [
             new TwigFunction('compareFollows', [$this, 'compareFollows']),
+            new TwigFunction('getFriendMessages', [$this, 'getFriendMessages']),
         ];
     }
 
@@ -33,5 +34,23 @@ class FollowExtension extends AbstractExtension
        }
     }
     return false;
+    }
+
+    public function getFriendMessages($userId, $followArray){
+
+        $messageArray = [];
+
+        foreach($followArray as $follow){
+                $messages = $follow->getFollowing()->getMessages()->toArray();
+                foreach($messages as $message){
+                     array_push($messageArray, $message);
+                }
+         }
+
+            usort($messageArray, function($a, $b) {
+                return $a->getPostDate() < $b->getPostDate()  ? 1 : -1;
+            });
+
+         return $messageArray;
     }
 }

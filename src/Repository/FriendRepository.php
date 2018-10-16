@@ -40,7 +40,7 @@ class FriendRepository extends ServiceEntityRepository
     public function findFollowers($user): array
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.follower = :val')
+            ->andWhere('f.following = :val')
             ->setParameter('val', $user->getId())
             ->getQuery()
             ->getResult()
@@ -50,7 +50,7 @@ class FriendRepository extends ServiceEntityRepository
     public function findFollowings($user): array
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.following = :val')
+            ->andWhere('f.follower = :val')
             ->setParameter('val', $user->getId())
             ->getQuery()
             ->getResult()
