@@ -308,6 +308,11 @@ body {
   color : white;
   font-weight: bold;
 }
+
+.follow-button-container{
+  padding: 0 !important;
+}
+
   /* END: Message flash */
   
   /* END: Main content elements' styles */

@@ -27,6 +27,8 @@ class UserFeedController extends AbstractController
         ->getRepository(Friend::class)
         ->findFollowings($user);
 
+        dump($user->followings);
+
         $message = new Message();
         $formMessage = $this->createForm(MessageType::class, $message);
         $formMessage->handleRequest($request);
@@ -81,7 +83,6 @@ class UserFeedController extends AbstractController
      */
     public function followUser(User $userId, UserInterface $user){
         $entityManager = $this->getDoctrine()->getManager();
-        $queryBuilder = $entityManager->createQueryBuilder();
         $followerId = $user->getId();
 
         $friend = new Friend();
@@ -93,5 +94,24 @@ class UserFeedController extends AbstractController
         return $this->redirect('/user/'.$userId);
     }
 
-    
+        
+    /**
+     * @Route("/user/unfollow/{userId}", name="unfollow_user")
+     */
+    public function unfollowUser(User $userId, UserInterface $user){
+        $entityManager = $this->getDoctrine()->getManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $followerId = $user->getId();
+
+        $queryBuilder->delete(Friend::class, 'f')
+        ->andWhere('f.follower = :follower')
+        ->setParameter(':follower', $followerId)    
+        ->andWhere('f.following = :following') 
+        ->setParameter(':following', $userId);     
+           $query = $queryBuilder->getQuery();
+           $query->execute();
+        $userId=$userId->getId();
+        return $this->redirect('/user/'.$userId);
+    }
+
 }

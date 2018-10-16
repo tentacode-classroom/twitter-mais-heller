@@ -55,7 +55,11 @@
         </div>
         <div class="col">
 {% if not (app.user.id in '/user/'~user.id) %}
-<a href="{{ path('follow_user', {'userId': user.id }) }}"><button class="btn tweet-to-btn">Follow</button></a>
+{% if not compareFollows(app.user, user.followings) %}
+<a class ="follow-button-container" href="{{ path('follow_user', {'userId': user.id }) }}"><button class="btn btn-search-bar tweet-to-btn">Follow</button></a>
+{% else %}
+<a class ="follow-button-container" href="{{ path('unfollow_user', {'userId': user.id }) }}"><button class="btn btn-search-bar tweet-to-btn">Unfollow</button></a>
+{% endif %}
 {% endif %}
         </div>
       </div>
