@@ -36,7 +36,7 @@
       <button class="btn btn-secondary dropdown-toggle btn-circle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  <img class="dropdown-button" src="{{ asset('/uploads/' ~ app.user.ProfilePicture) }}"></button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="/user/{{app.user.id}}"">Profile</a>
-        <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
+        <a class="dropdown-item" href="{{path('logout')}}">Logout</a>
       </div>
     </div>
     <!-- END: Navbar User menu -->
