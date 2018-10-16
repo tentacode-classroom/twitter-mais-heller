@@ -1,9 +1,6 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block title %}Heller {% endblock %}
-
 
 {% block body %}
 
@@ -17,8 +14,48 @@
     <br>
     
 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<div class="no-margin row">
+      <div class="col-3">
+      <div class="profile-background">
+    <div class="container tweet-card">
+	  <!-- User main avatar -->
+      <div class="avatar-container menu-container">
+        <div class="avatar">
+            <img src="{{ asset('/uploads/' ~ user.ProfilePicture) }}">
+        </div>
+      </div>
+       <ul class="home-info row tweet-list">
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Tweets</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.messages|length}}</span>
+              </a>
+            </li>
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Following</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.followings|length}}</span>
+              </a>
+            </li>
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Followers</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.followers|length}}</span>
+              </a>
+            </li>
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Likes</span>
+                <span class="profile-stats-item profile-stats-item-number">241</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+  </div>
+      </div>
+
       <div class="col-6">
-        <ol class="tweet-list">
+        <ol class="tweet-list menu-list">
 {% for message in getFriendMessages(app.user, user.followings) %}
           <li class="tweet-card">
             <div class="tweet-content">
@@ -51,6 +88,7 @@
           </li>
     {% endfor %}
     </ol>
+    </div>
     </div>
     {% else %}
         <div class="container_registration"> 

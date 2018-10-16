@@ -65,7 +65,6 @@ class HomepageController extends AbstractController
         }
         $loggedUser=$tokenStorage->getToken()->getUser();
         if($loggedUser != "anon."){
-        dump($loggedUser);
 /*
         $loggedUser = $this->getDoctrine()
         ->getRepository(User::class)

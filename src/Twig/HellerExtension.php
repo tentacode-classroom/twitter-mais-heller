@@ -43,7 +43,6 @@ class HellerExtension extends AbstractExtension
         foreach($followArray as $follow){
                 $messages = $follow->getFollowing()->getMessages()->toArray();
                 foreach($messages as $message){
-                    dump($message);
                      array_push($messageArray, $message);
                 }
          }
@@ -52,7 +51,6 @@ class HellerExtension extends AbstractExtension
                 return $a->getPostDate() < $b->getPostDate()  ? 1 : -1;
             });
 
-         dump($messageArray);
          return $messageArray;
     }
 }
