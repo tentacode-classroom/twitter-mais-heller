@@ -118,7 +118,7 @@
                 
                 <span class="tweet-time">- {{message.PostDate|date('Y-m-d')}}</span>
                 {% if (app.user.id in '/user/'~user.id) or (app.user.roles == 'ROLE_ADMIN' or 'ROLE_MOD')  %}
-                <a href="{{ path('delete_message', {'messageId': message.id }) }}">Delete</a>
+                <a class="delete-icon" href="{{ path('delete_message', {'messageId': message.id }) }}"><i class="octicon octicon-trashcan"></i></a>
                 {% endif %}
               </div>
               <a>
