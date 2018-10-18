@@ -137,11 +137,9 @@
                 </a>
 
 {% if not compareRetweets(user, message) %}
-PAS RT
   <a href="{{ path('retweet_message', {'messageId': message.id }) }}" class="tweet-footer-btn RT">
     <i class="octicon octicon-sync" aria-hidden="true"></i><span> {{message.getRetweets()|length}}</span>
 {% else %}
-RT
   <a href="{{ path('unretweet_message', {'messageId': message.id }) }}" class="tweet-footer-btn RT">
     <i class="octicon green octicon-sync" aria-hidden="true"></i><span> {{message.getRetweets()|length}}</span>
 {% endif %}
