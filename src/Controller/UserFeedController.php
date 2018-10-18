@@ -11,15 +11,20 @@ use App\Entity\Retweet;
 use App\Entity\Message;
 use App\Form\MessageType;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UserFeedController extends AbstractController
 {
     /**
      * @Route("/user/{userId}", name="user_feed")
      */
-    public function index(Request $request, $userId = 3)
+    public function index(Request $request, $userId = 3, TokenStorageInterface $tokenStorage )
     {
-        
+
+        //User qui visite
+        $loggedUser=$tokenStorage->getToken()->getUser();
+
+        //User de la page visitée
         $user = $this->getDoctrine()
         ->getRepository(User::class)
         ->find($userId);
@@ -48,6 +53,7 @@ class UserFeedController extends AbstractController
    
         return $this->render('UserFeed/index.html.twig', [
         'user' => $user,
+        'loggedUser' => $loggedUser,
         'formMessage' => $formMessage->createView(),
         ]);
     }

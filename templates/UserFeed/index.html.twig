@@ -2,8 +2,6 @@
 
 {% block body %}
 
-{% include 'Layout/menu.html.twig' %}
-
 {% form_theme formMessage 'bootstrap_4_layout.html.twig' %}
 
 <div class="main-container">
@@ -54,8 +52,8 @@
           </ul>
         </div>
         <div class="col">
-{% if not (app.user.id in '/user/'~user.id) %}
-{% if not compareFollows(app.user, user.followers) %}
+{% if not (user.id in '/user/'~user.id) %}
+{% if not compareFollows(user, user.followers) %}
 <a class ="follow-button-container" href="{{ path('follow_user', {'userId': user.id }) }}"><button class="btn btn-search-bar tweet-to-btn">Follow</button></a>
 {% else %}
 <a class ="follow-button-container" href="{{ path('unfollow_user', {'userId': user.id }) }}"><button class="btn btn-search-bar tweet-to-btn">Unfollow</button></a>
@@ -99,7 +97,7 @@
       <!-- Center content column -->
       <div class="col-6">
         <ol class="tweet-list">
-{% if app.user.id in '/user/'~user.id %}
+{% if loggedUser.id in '/user/'~user.id %}
 <li class="tweet-card">
         {{ form_start(formMessage) }}
         {{ form_widget(formMessage) }}
@@ -111,7 +109,7 @@
 {% for message in getMessages(user) %}
           <li class="tweet-card">
           {% if message.isRetweeted is defined %}
-            <i class="octicon octicon-sync" aria-hidden="true"></i><span> {{ app.user.profileName }} a retweeté :</span>
+            <i class="octicon octicon-sync" aria-hidden="true"></i><span> {{ user.profileName }} a retweeté :</span>
             {% endif %}
             
             <div class="tweet-content">
@@ -121,7 +119,7 @@
                 </span>
 
                 <span class="tweet-time">- {{message.PostDate|date('Y-m-d')}}</span>
-                {% if (app.user == message.user) or (app.user.roles == 'ROLE_ADMIN') or (app.user.roles == 'ROLE_MOD')  %}
+                {% if (loggedUser == message.user) or (loggedUser.roles == 'ROLE_ADMIN') or (loggedUser.roles == 'ROLE_MOD')  %}
 
                 <a class="delete-icon" href="{{ path('delete_message', {'messageId': message.id }) }}"><i class="octicon octicon-trashcan"></i></a>
                 {% endif %}
@@ -138,7 +136,7 @@
                   <i class="octicon octicon-comment" aria-hidden="true"></i><span> 0</span>
                 </a>
 
-{% if not compareRetweets(app.user, message) %}
+{% if not compareRetweets(user, message) %}
 PAS RT
   <a href="{{ path('retweet_message', {'messageId': message.id }) }}" class="tweet-footer-btn RT">
     <i class="octicon octicon-sync" aria-hidden="true"></i><span> {{message.getRetweets()|length}}</span>
@@ -149,7 +147,7 @@ RT
 {% endif %}
  </a>
 
-{% if not compareLikes(app.user, message) %}
+{% if not compareLikes(user, message) %}
   <a href="{{ path('like_message', {'messageId': message.id }) }}" class="tweet-footer-btn LIKE">
     <i class="octicon octicon-heart" aria-hidden="true"></i><span> {{message.getLikes()|length}}</span>
 {% else %}
