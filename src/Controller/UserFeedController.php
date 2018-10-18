@@ -125,7 +125,8 @@ class UserFeedController extends AbstractController
     /**
     * @Route("/user/like/{messageId}", name="like_message")
     */
-    public function likeMessage(Message $messageId, UserInterface $loggedUser, Request $request){
+    public function likeMessage(Message $messageId, UserInterface $loggedUser, Request $request)
+    {
         $entityManager = $this->getDoctrine()->getManager();
 
         $message = $this->getDoctrine()->getRepository(Message::class) ->find($messageId);
@@ -145,7 +146,8 @@ class UserFeedController extends AbstractController
         /**
     * @Route("/user/unlike/{messageId}", name="unlike_message")
     */
-    public function unlikeMessage(Message $messageId, UserInterface $loggedUser, Request $request){
+    public function unlikeMessage(Message $messageId, UserInterface $loggedUser, Request $request)
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         
@@ -166,7 +168,8 @@ class UserFeedController extends AbstractController
         /**
     * @Route("/user/retweet/{messageId}", name="retweet_message")
     */
-    public function retweetMessage(Message $messageId, UserInterface $loggedUser, Request $request){
+    public function retweetMessage(Message $messageId, UserInterface $loggedUser, Request $request)
+    {
         $entityManager = $this->getDoctrine()->getManager();
 
         $message = $this->getDoctrine()->getRepository(Message::class) ->find($messageId);
@@ -186,7 +189,8 @@ class UserFeedController extends AbstractController
         /**
     * @Route("/user/unretweet/{messageId}", name="unretweet_message")
     */
-    public function unretweetMessage(Message $messageId, UserInterface $loggedUser, Request $request){
+    public function unretweetMessage(Message $messageId, UserInterface $loggedUser, Request $request)
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         

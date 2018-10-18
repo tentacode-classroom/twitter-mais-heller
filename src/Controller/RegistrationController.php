@@ -69,7 +69,6 @@ class RegistrationController extends AbstractController
         }
         $loggedUser=$tokenStorage->getToken()->getUser();
         if ($loggedUser != "anon.") {
-
             $loggedUser->followers = $this->getDoctrine()
             ->getRepository(Friend::class)
             ->findFollowers($loggedUser);

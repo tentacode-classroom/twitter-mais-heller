@@ -79,7 +79,7 @@ class UserController extends AbstractController
             $file2 = $user->getBannerPicture();
             $fileName2 = md5(uniqid()).'.'.$file2->guessExtension();
             $file2->move($this->getParameter('upload_directory'), $fileName2);
-            $user->setBannerPicture($fileName2);            
+            $user->setBannerPicture($fileName2);
 
 
 

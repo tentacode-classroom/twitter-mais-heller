@@ -17,11 +17,10 @@ class HomepageController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index( TokenStorageInterface $tokenStorage) 
+    public function index(TokenStorageInterface $tokenStorage)
     {
         $loggedUser=$tokenStorage->getToken()->getUser();
         if ($loggedUser != "anon.") {
-
             $loggedUser->followers = $this->getDoctrine()
             ->getRepository(Friend::class)
             ->findFollowers($loggedUser);
