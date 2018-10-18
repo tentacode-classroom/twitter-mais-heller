@@ -16,16 +16,22 @@
     <h1> Page Home </h1>
     <br>
 
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <h3> Actu </h3>
-        <br>
-        <p> Affichage des actus d'amis </p>
-    {% else %}
-        <div class="container_registration"> 
-            {{ form_start(formRegistration) }}
-            {{ form_widget(formRegistration) }}
-            {{ form_end(formRegistration) }}
+    <div class="homepage_container">
+        <div class="left"> </div>
+        
+        <div class="right">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <h3> Actu </h3>
+            <br>
+            <p> Affichage des actus d'amis </p>
+        {% else %}
+            <div class="container_registration"> 
+                {{ form_start(formRegistration) }}
+                {{ form_widget(formRegistration) }}
+                {{ form_end(formRegistration) }}
+            </div>
+        {% endif %}
         </div>
-    {% endif %}
+    </div>
 
 {% endblock %}
