@@ -12,7 +12,7 @@ class ChoiceController extends AbstractController
      */
     public function index()
     {
-        return $this->render('choice/index.html.twig', [
+        return $this->render('homepage.html.twig', [
             'controller_name' => 'ChoiceController',
         ]);
     }

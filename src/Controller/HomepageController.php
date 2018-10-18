@@ -84,7 +84,7 @@ class HomepageController extends AbstractController
         }
         
 
-        return $this->render('homepage.html.twig', array(
+        return $this->render('registration/index.html.twig', array(
             'user' => $loggedUser,
             'formRegistration' => $formRegistration->createView(),
         ));
