@@ -80,8 +80,16 @@
                 <a class="tweet-footer-btn RT">
                   <i class="octicon octicon-sync" aria-hidden="true"></i><span> {{message.retweet}}</span>
                 </a>
-                <a class="tweet-footer-btn LIKE">
-                  <i class="octicon octicon-heart" aria-hidden="true"></i><span> {{message.likes}}</span>
+
+{% if not compareLikes(app.user, message) %}
+  <a href="{{ path('like_message', {'messageId': message.id }) }}" class="tweet-footer-btn LIKE">
+{% else %}
+  <a href="{{ path('unlike_message', {'messageId': message.id }) }}" class="tweet-footer-btn LIKE">
+{% endif %}
+
+
+
+                  <i class="octicon octicon-heart" aria-hidden="true"></i><span> {{message.getLikes()|length}}</span>
                 </a>
               </div>
             </div>

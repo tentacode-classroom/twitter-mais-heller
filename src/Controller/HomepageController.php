@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 use App\Entity\Friend;
+use App\Entity\Like;
 use App\Form\RegistrationType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
