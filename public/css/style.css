@@ -344,13 +344,24 @@ body {
   color: red !important;
 }
 
-
 .LIKE{
   text-decoration : none;
 }
 
 .LIKE:hover{
   text-decoration : none;
+}
+
+.RT{
+  text-decoration : none;
+}
+
+.RT:hover{
+  text-decoration : none;
+}
+
+.green {
+  color: green !important;
 }
 
 /*.form_errors {

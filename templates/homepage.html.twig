@@ -78,7 +78,7 @@
                   <i class="octicon octicon-comment" aria-hidden="true"></i><span> 0</span>
                 </a>
                 <a class="tweet-footer-btn RT">
-                  <i class="octicon octicon-sync" aria-hidden="true"></i><span> {{message.retweet}}</span>
+                  <i class="octicon octicon-sync" aria-hidden="true"></i><span> {{message.getRetweets()|length}}</span>
                 </a>
 
 {% if not compareLikes(app.user, message) %}

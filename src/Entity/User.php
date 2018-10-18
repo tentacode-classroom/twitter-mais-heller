@@ -95,6 +95,11 @@ class User implements UserInterface, \Serializable
      */
     private $likes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Retweet", mappedBy="retweeter")
+     */
+    private $retweets;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -102,6 +107,7 @@ class User implements UserInterface, \Serializable
         $this->followers = new ArrayCollection();
         $this->friend = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->retweets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -354,6 +360,37 @@ class User implements UserInterface, \Serializable
             // set the owning side to null (unless already changed)
             if ($like->getLiker() === $this) {
                 $like->setLiker(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Retweet[]
+     */
+    public function getRetweets(): Collection
+    {
+        return $this->retweets;
+    }
+
+    public function addRetweet(Retweet $retweet): self
+    {
+        if (!$this->retweets->contains($retweet)) {
+            $this->retweets[] = $retweet;
+            $retweet->setRetweeter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRetweet(Retweet $retweet): self
+    {
+        if ($this->retweets->contains($retweet)) {
+            $this->retweets->removeElement($retweet);
+            // set the owning side to null (unless already changed)
+            if ($retweet->getRetweeter() === $this) {
+                $retweet->setRetweeter(null);
             }
         }
 

@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Entity\Friend;
 use App\Entity\Likes;
+use App\Entity\Retweet;
 use App\Entity\Message;
 use App\Form\MessageType;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -155,6 +156,47 @@ class UserFeedController extends AbstractController
         ->setParameter(':liker', $loggedUser)
         ->andWhere('l.messageLiked = :messageLiked')
         ->setParameter(':messageLiked', $messageId);
+           $query = $queryBuilder->getQuery();
+           $query->execute();
+        
+        $previousUrl = $request->server->get('HTTP_REFERER');
+
+        return $this->redirect($previousUrl);
+    }
+
+
+        /**
+    * @Route("/user/retweet/{messageId}", name="retweet_message")
+    */
+    public function retweetMessage(Message $messageId, UserInterface $loggedUser, Request $request){
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $message = $this->getDoctrine()->getRepository(Message::class) ->find($messageId);
+
+        $retweet = new Retweet();
+        $retweet->setRetweeter($loggedUser);
+        $retweet->setMessageRetweeted($message);
+        $entityManager->persist($retweet);
+        $entityManager->flush();
+        
+        $previousUrl = $request->server->get('HTTP_REFERER');
+
+        return $this->redirect($previousUrl);
+    }
+
+
+        /**
+    * @Route("/user/unretweet/{messageId}", name="unretweet_message")
+    */
+    public function unretweetMessage(Message $messageId, UserInterface $loggedUser, Request $request){
+        $entityManager = $this->getDoctrine()->getManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        
+        $queryBuilder->delete(Retweet::class, 'l')
+        ->andWhere('l.retweeter = :retweeter')
+        ->setParameter(':retweeter', $loggedUser)
+        ->andWhere('l.messageRetweeted = :messageRetweeted')
+        ->setParameter(':messageRetweeted', $messageId);
            $query = $queryBuilder->getQuery();
            $query->execute();
         

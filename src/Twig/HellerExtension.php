@@ -22,6 +22,7 @@ class HellerExtension extends AbstractExtension
         return [
             new TwigFunction('compareFollows', [$this, 'compareFollows']),
             new TwigFunction('compareLikes', [$this, 'compareLikes']),
+            new TwigFunction('compareRetweets', [$this, 'compareRetweets']),
             new TwigFunction('getFriendMessages', [$this, 'getFriendMessages']),
         ];
     }
@@ -61,6 +62,20 @@ class HellerExtension extends AbstractExtension
 
         foreach($messageLikes as $like){
             if ($like->getLiker()==$user){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
+    public function compareRetweets($user, $message)
+    {
+        $messageRetweets = $message->getRetweets();
+
+        foreach($messageRetweets as $retweet){
+            if ($retweet->getRetweeter()==$user){
                 return true;
             }
             else{
