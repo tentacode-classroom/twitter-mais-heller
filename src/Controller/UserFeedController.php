@@ -17,6 +17,7 @@ class UserFeedController extends AbstractController
      */
     public function index(Request $request, $userId = 3)
     {
+        
         $user = $this->getDoctrine()
         ->getRepository(User::class)
         ->find($userId);
@@ -66,7 +67,9 @@ class UserFeedController extends AbstractController
         $query = $queryBuilder->getQuery();
         $message = $query->execute();
         $id = $message[0]->getUser()->getId();
-        if ($id != $userId) {
+        $role = $user->getRoles()[0];
+        
+        if ($id != $userId && $role == "ROLE_USER") {
             return $this->redirect('/');
         }
         $queryBuilder->delete(Message::class, 'm')
@@ -76,7 +79,7 @@ class UserFeedController extends AbstractController
         $query = $queryBuilder->getQuery();
         $query->execute();
         $userId = $user->getId();
-        return $this->redirect('/user/'.$userId);
+        return $this->redirect('/user/'.$id);
     }
 
     /**

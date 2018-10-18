@@ -14,7 +14,7 @@ class HellerExtension extends AbstractExtension
             // If your filter generates SAFE HTML, you should add a third
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
-            new TwigFilter('filter_name', [$this, 'doSomething']),
+            new TwigFilter('date_diff', [$this, 'datediffFilter']),
         ];
     }
 
@@ -54,4 +54,51 @@ class HellerExtension extends AbstractExtension
 
          return $messageArray;
     }
+
+    public function datediffFilter(\Twig_Environment $env, $date, $now = null)
+    {
+        // Convert both dates to DateTime instances.
+        $date = $this->dateFromString($env, $date, false);
+        $now = $this->dateFromString($env, $now, false);
+ 
+        // Get the difference between the two DateTime objects.
+        $diff = $date->diff($now);
+ 
+        return $diff;
+    }
+
+     
+    public function dateFromString($env, $date, $timezone)
+    {
+        // determine the timezone
+        if (!$timezone) {
+            $defaultTimezone = $env->getExtension('core')->getTimezone();
+        } elseif (!$timezone instanceof DateTimeZone) {
+            $defaultTimezone = new DateTimeZone($timezone);
+        } else {
+            $defaultTimezone = $timezone;
+        }
+ 
+        // immutable dates
+        if ($date instanceof DateTimeImmutable) {
+            return false !== $timezone ? $date->setTimezone($defaultTimezone) : $date;
+        }
+ 
+        if ($date instanceof DateTime || $date instanceof DateTimeInterface) {
+            $date = clone $date;
+            if (false !== $timezone) {
+                $date->setTimezone($defaultTimezone);
+            }
+ 
+            return $date;
+        }
+ 
+        $date = new DateTime($date, $defaultTimezone);
+        if (false !== $timezone) {
+            $date->setTimezone($defaultTimezone);
+        }
+ 
+        return $date;
+    }
+ 
 }

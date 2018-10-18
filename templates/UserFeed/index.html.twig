@@ -108,7 +108,7 @@
 {% endif %}
 
 
-{% for message in user.messages|reverse %}
+{% for message in user.messages %}
           <li class="tweet-card">
             <div class="tweet-content">
               <div class="tweet-header">
@@ -117,8 +117,8 @@
                 </span>
                 
                 <span class="tweet-time">- {{message.PostDate|date('Y-m-d')}}</span>
-                {% if app.user.id in '/user/'~user.id %}
-                <a href="{{ path('delete_message', {'messageId': message.id }) }}">Delete</a>
+                {% if (app.user.id in '/user/'~user.id) or (app.user.roles == 'ROLE_ADMIN' or 'ROLE_MOD')  %}
+                <a class="delete-icon" href="{{ path('delete_message', {'messageId': message.id }) }}"><i class="octicon octicon-trashcan"></i></a>
                 {% endif %}
               </div>
               <a>
