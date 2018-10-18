@@ -194,10 +194,6 @@ body {
   }
   /* END: Left column*/
   
-  /* Main column*/
-  .main-content {
-  }
-  
   .tweet-list {
     list-style: none;
     margin: 8px 4px 0;
@@ -344,13 +340,24 @@ body {
   color: red !important;
 }
 
-
 .LIKE{
   text-decoration : none;
 }
 
 .LIKE:hover{
   text-decoration : none;
+}
+
+.RT{
+  text-decoration : none;
+}
+
+.RT:hover{
+  text-decoration : none;
+}
+
+.green {
+  color: green !important;
 }
 
 /*.form_errors {

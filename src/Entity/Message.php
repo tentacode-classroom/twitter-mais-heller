@@ -35,18 +35,19 @@ class Message
     private $user;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $retweet;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="messageLiked")
      */
     private $likes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Retweet", mappedBy="messageRetweeted")
+     */
+    private $retweets;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
+        $this->retweets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,18 +91,6 @@ class Message
         return $this;
     }
 
-    public function getRetweet(): ?int
-    {
-        return $this->retweet;
-    }
-
-    public function setRetweet(?int $retweet): self
-    {
-        $this->retweet = $retweet;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Likes[]
      */
@@ -127,6 +116,37 @@ class Message
             // set the owning side to null (unless already changed)
             if ($likes->getMessageLiked() === $this) {
                 $likes->setMessageLiked(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Retweet[]
+     */
+    public function getRetweets(): Collection
+    {
+        return $this->retweets;
+    }
+
+    public function addRetweet(Retweet $retweet): self
+    {
+        if (!$this->retweets->contains($retweet)) {
+            $this->retweets[] = $retweet;
+            $retweet->setMessageRetweeted($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRetweet(Retweet $retweet): self
+    {
+        if ($this->retweets->contains($retweet)) {
+            $this->retweets->removeElement($retweet);
+            // set the owning side to null (unless already changed)
+            if ($retweet->getMessageRetweeted() === $this) {
+                $retweet->setMessageRetweeted(null);
             }
         }
 

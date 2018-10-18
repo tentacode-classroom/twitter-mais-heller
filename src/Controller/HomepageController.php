@@ -69,11 +69,7 @@ class HomepageController extends AbstractController
         }
         $loggedUser=$tokenStorage->getToken()->getUser();
         if ($loggedUser != "anon.") {
-/*
-        $loggedUser = $this->getDoctrine()
-        ->getRepository(User::class)
-        ->find($userId);
-*/
+
             $loggedUser->followers = $this->getDoctrine()
             ->getRepository(Friend::class)
             ->findFollowers($loggedUser);
@@ -83,8 +79,8 @@ class HomepageController extends AbstractController
             ->findFollowings($loggedUser);
         }
         
-
         return $this->render('registration/index.html.twig', array(
+
             'user' => $loggedUser,
             'formRegistration' => $formRegistration->createView(),
         ));

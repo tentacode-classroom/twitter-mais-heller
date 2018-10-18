@@ -22,7 +22,9 @@ class HellerExtension extends AbstractExtension
         return [
             new TwigFunction('compareFollows', [$this, 'compareFollows']),
             new TwigFunction('compareLikes', [$this, 'compareLikes']),
+            new TwigFunction('compareRetweets', [$this, 'compareRetweets']),
             new TwigFunction('getFriendMessages', [$this, 'getFriendMessages']),
+            new TwigFunction('getMessages', [$this, 'getMessages']),
         ];
     }
 
@@ -58,14 +60,49 @@ class HellerExtension extends AbstractExtension
     public function compareLikes($user, $message)
     {
         $messageLikes = $message->getLikes();
-
         foreach($messageLikes as $like){
-            if ($like->getLiker()==$user){
+                if ($like->getLiker()==$user){
                 return true;
             }
-            else{
-                return false;
+            
+        }
+        return false;
+    }
+
+    public function compareRetweets($user, $message)
+    {
+        $messageRetweets = $message->getRetweets();
+
+        foreach($messageRetweets as $retweet){
+            if ($retweet->getRetweeter()==$user){
+                return true;
             }
         }
+        return false;
+    }
+
+
+    public function getMessages($user){
+        $userMessages = $user->getMessages()->toArray();
+        $userRetweets = $retweets = $user->getRetweets();
+
+        $retweetArray = [];
+
+        foreach ($userRetweets as $retweet) {
+                $message = $retweet->getMessageRetweeted();
+                if(!($message->getUser() == $user)){
+                    $message->isRetweeted=true;
+                    array_push($retweetArray, $message);
+                }
+            }
+            dump($retweetArray);
+
+        $messages = array_merge($userMessages, $retweetArray);
+            dump(count($messages));
+        usort($messages, function ($a, $b) {
+            return $a->getPostDate() < $b->getPostDate()  ? 1 : -1;
+        });
+        
+        return $messages;
     }
 }
