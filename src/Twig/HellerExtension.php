@@ -24,6 +24,7 @@ class HellerExtension extends AbstractExtension
             new TwigFunction('compareLikes', [$this, 'compareLikes']),
             new TwigFunction('compareRetweets', [$this, 'compareRetweets']),
             new TwigFunction('getFriendMessages', [$this, 'getFriendMessages']),
+            new TwigFunction('getMessages', [$this, 'getMessages']),
         ];
     }
 
@@ -82,5 +83,26 @@ class HellerExtension extends AbstractExtension
                 return false;
             }
         }
+    }
+
+
+    public function getMessages($user){
+        $userMessages = $user->getMessages()->toArray();
+        $userRetweets = $retweets = $user->getRetweets();
+
+        $retweetArray = [];
+
+        foreach ($userRetweets as $retweet) {
+                $message = $retweet->getMessageRetweeted();
+                $message->isRetweeted=true;
+            array_push($retweetArray, $message);
+            }
+
+        $yolo = $messages = array_merge($userMessages, $retweetArray);
+
+        usort($yolo, function ($a, $b) {
+            return $a->getPostDate() < $b->getPostDate()  ? 1 : -1;
+        });
+        return $yolo;
     }
 }

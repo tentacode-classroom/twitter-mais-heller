@@ -30,7 +30,7 @@
             <li class="profile-stats-item-active">
               <a>
                 <span class="profile-stats-item profile-stats-item-label">Tweets</span>
-                <span class="profile-stats-item profile-stats-item-number">{{user.messages|length}}</span>
+                <span class="profile-stats-item profile-stats-item-number">{{getMessages(user)|length}}</span>
               </a>
             </li>
             <li>
@@ -108,16 +108,20 @@
 {% endif %}
 
 
-{% for message in user.messages %}
+{% for message in getMessages(user) %}
           <li class="tweet-card">
+          {% if message.isRetweeted is defined %}
+            <i class="octicon octicon-sync" aria-hidden="true"></i><span> Vous avez retweeté :</span>
+            {% endif %}
+            
             <div class="tweet-content">
               <div class="tweet-header">
                 <span class="fullname">
-                  <a href="/user/{{user.id}}">{{user.ProfileName}}</a>
+                  <a href="/user/{{message.user.id}}">{{message.user.ProfileName}}</a>
                 </span>
                 
                 <span class="tweet-time">- {{message.PostDate|date('Y-m-d')}}</span>
-                {% if (app.user.id in '/user/'~user.id) or (app.user.roles == 'ROLE_ADMIN' or 'ROLE_MOD')  %}
+                {% if (app.user == message.user) or (app.user.roles == 'ROLE_ADMIN') or (app.user.roles == 'ROLE_MOD')  %}
                 <a class="delete-icon" href="{{ path('delete_message', {'messageId': message.id }) }}"><i class="octicon octicon-trashcan"></i></a>
                 {% endif %}
               </div>
