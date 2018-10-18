@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -35,12 +37,17 @@ class Message
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $likes;
+    private $retweet;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="messageLiked")
      */
-    private $retweet;
+    private $likes;
+
+    public function __construct()
+    {
+        $this->likes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -83,18 +90,6 @@ class Message
         return $this;
     }
 
-    public function getLikes(): ?int
-    {
-        return $this->likes;
-    }
-
-    public function setLikes(?int $likes): self
-    {
-        $this->likes = $likes;
-
-        return $this;
-    }
-
     public function getRetweet(): ?int
     {
         return $this->retweet;
@@ -103,6 +98,37 @@ class Message
     public function setRetweet(?int $retweet): self
     {
         $this->retweet = $retweet;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Likes[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLikes(Likes $likes): self
+    {
+        if (!$this->likes->contains($likes)) {
+            $this->likes[] = $likes;
+            $likes->setMessageLiked($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikes(Likes $likes): self
+    {
+        if ($this->likes->contains($likes)) {
+            $this->likes->removeElement($likes);
+            // set the owning side to null (unless already changed)
+            if ($likes->getMessageLiked() === $this) {
+                $likes->setMessageLiked(null);
+            }
+        }
 
         return $this;
     }

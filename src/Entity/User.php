@@ -90,12 +90,18 @@ class User implements UserInterface, \Serializable
      */
     private $follower;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="liker")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
         $this->following = new ArrayCollection();
         $this->followers = new ArrayCollection();
         $this->friend = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -318,6 +324,37 @@ class User implements UserInterface, \Serializable
         $newFollower = $follower === null ? null : $this;
         if ($newFollower !== $follower->getFollower()) {
             $follower->setFollower($newFollower);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Likes[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Likes $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setLiker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Likes $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getLiker() === $this) {
+                $like->setLiker(null);
+            }
         }
 
         return $this;

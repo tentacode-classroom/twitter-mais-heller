@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Entity\Friend;
+use App\Entity\Likes;
 use App\Entity\Message;
 use App\Form\MessageType;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -54,7 +55,7 @@ class UserFeedController extends AbstractController
     /**
      * @Route("/user/deletemessage/{messageId}", name="delete_message")
      */
-    public function deleteMessage(Message $messageId, UserInterface $user)
+    public function deleteMessage(Message $messageId, UserInterface $user, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $queryBuilder = $entityManager->createQueryBuilder();
@@ -78,14 +79,16 @@ class UserFeedController extends AbstractController
         
         $query = $queryBuilder->getQuery();
         $query->execute();
-        $userId = $user->getId();
-        return $this->redirect('/user/'.$id);
+        $previousUrl = $request->server->get('HTTP_REFERER');
+        dump($previousUrl);
+
+        return $this->redirect($previousUrl);
     }
 
     /**
      * @Route("/user/follow/{userId}", name="follow_user")
      */
-    public function followUser(User $userId, UserInterface $user)
+    public function followUser(User $userId, UserInterface $user, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $followerId = $user->getId();
@@ -95,15 +98,17 @@ class UserFeedController extends AbstractController
         $friend->setFollowing($userId);
         $entityManager->persist($friend);
         $entityManager->flush();
-        $userId=$userId->getId();
-        return $this->redirect('/user/'.$userId);
+        $previousUrl = $request->server->get('HTTP_REFERER');
+        dump($previousUrl);
+
+        return $this->redirect($previousUrl);
     }
 
         
     /**
      * @Route("/user/unfollow/{userId}", name="unfollow_user")
      */
-    public function unfollowUser(User $userId, UserInterface $user)
+    public function unfollowUser(User $userId, UserInterface $user, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $queryBuilder = $entityManager->createQueryBuilder();
@@ -116,7 +121,51 @@ class UserFeedController extends AbstractController
         ->setParameter(':following', $userId);
            $query = $queryBuilder->getQuery();
            $query->execute();
-        $userId=$userId->getId();
-        return $this->redirect('/user/'.$userId);
+           $previousUrl = $request->server->get('HTTP_REFERER');
+           dump($previousUrl);
+   
+           return $this->redirect($previousUrl);
+    }
+
+    /**
+    * @Route("/user/like/{messageId}", name="like_message")
+    */
+    public function likeMessage(Message $messageId, UserInterface $loggedUser, Request $request){
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $message = $this->getDoctrine()->getRepository(Message::class) ->find($messageId);
+
+        $like = new Likes();
+        $like->setLiker($loggedUser);
+        $like->setMessageLiked($message);
+        $entityManager->persist($like);
+        $entityManager->flush();
+        
+        $previousUrl = $request->server->get('HTTP_REFERER');
+        dump($previousUrl);
+
+        return $this->redirect($previousUrl);
+    }
+
+
+        /**
+    * @Route("/user/unlike/{messageId}", name="unlike_message")
+    */
+    public function unlikeMessage(Message $messageId, UserInterface $loggedUser, Request $request){
+        $entityManager = $this->getDoctrine()->getManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        
+        $queryBuilder->delete(Likes::class, 'l')
+        ->andWhere('l.liker = :liker')
+        ->setParameter(':liker', $loggedUser)
+        ->andWhere('l.messageLiked = :messageLiked')
+        ->setParameter(':messageLiked', $messageId);
+           $query = $queryBuilder->getQuery();
+           $query->execute();
+        
+        $previousUrl = $request->server->get('HTTP_REFERER');
+        dump($previousUrl);
+
+        return $this->redirect($previousUrl);
     }
 }
