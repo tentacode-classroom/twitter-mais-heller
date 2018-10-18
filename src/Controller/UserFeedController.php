@@ -17,6 +17,7 @@ class UserFeedController extends AbstractController
      */
     public function index(Request $request, $userId = 3)
     {
+        
         $user = $this->getDoctrine()
         ->getRepository(User::class)
         ->find($userId);
