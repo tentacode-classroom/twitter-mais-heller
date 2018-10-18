@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChoiceController extends AbstractController
 {
     /**
-     * @Route("/", name="choice")
+     * @Route("/", name="homepage")
      */
     public function index()
     {

@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class HomepageController extends AbstractController
 {
     /**
-     * @Route("/registration", name="homepage")
+     * @Route("/registration", name="registration")
      */
     public function index(
         Request $request,
