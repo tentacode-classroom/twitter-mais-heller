@@ -35,12 +35,15 @@ class CommandInstall extends Command
             'composer require orm-fixtures --dev',
             'composer require twig/extensions',
             'composer require symfony/messenger',
+            'bin/console server:start',
         ];
 
         foreach ($commands as $command) {
             $process = new Process(
                 $command
             );
+            $output->write('Installing : ');
+            $output->write($command);
             $process->run();
         }
     }
