@@ -309,11 +309,43 @@ body {
   font-weight: bold;
 }
 
+.follow-button-container{
+  padding: 0 !important;
+}
+
+.no-margin{
+  margin:0;
+}
+
+.no-padding{
+  padding:0 !important;
+}
+
+.menu-container{
+  top:0px;
+  left:32.5px;
+}
+
+.home-info{
+  display: flex;
+  justify-content: space-between;
+  margin-top:220px;
+}
+
+.menu-list{
+  margin-top: 0px !important;
+}
+
+.delete-icon{
+  float: right;
+}
+
 /*.form_errors {
   background-color: rgba(240, 11, 11, 0.4);
   color : white;
   font-weight: bold;
 }*/
+
   /* END: Message flash */
   
   /* END: Main content elements' styles */

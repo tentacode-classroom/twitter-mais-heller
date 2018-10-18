@@ -33,16 +33,14 @@ class CommandInstall extends Command
 
         $commands = [
             'composer require orm-fixtures --dev',
+            'composer require twig/extensions',
         ];
 
-    foreach($commands as $command){
-        $process = new Process(
-            $command
-        );
-        $process->run();
-    }
-    
-        
-    
+        foreach ($commands as $command) {
+            $process = new Process(
+                $command
+            );
+            $process->run();
+        }
     }
 }

@@ -7,15 +7,21 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
+use App\Entity\Friend;
 use App\Form\RegistrationType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class HomepageController extends AbstractController
 {
     /**
      * @Route("/", name="homepage")
      */
-    public function index(Request $request, \Swift_Mailer $mailer, UserPasswordEncoderInterface $encoder)
-    {
+    public function index(
+        Request $request,
+        \Swift_Mailer $mailer,
+        UserPasswordEncoderInterface $encoder,
+        TokenStorageInterface $tokenStorage
+    ) {
         $user = new User();
 
         $formRegistration = $this->createForm(RegistrationType::class, $user);
@@ -29,13 +35,13 @@ class HomepageController extends AbstractController
             $encryptedPassword = $encoder->encodePassword($user, $plainPassword);
             $user->setPassword($encryptedPassword);
 
-            // renommer photo de profil pour qu'il n'y en pas avec un nom similaire 
+            // renommer photo de profil pour qu'il n'y en pas avec un nom similaire
             $file = $user->getProfilePicture();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
             $file->move($this->getParameter('upload_directory'), $fileName);
             $user->setProfilePicture($fileName);
 
-            // renommer bannière pour qu'il n'y en pas avec un nom similaire 
+            // renommer bannière pour qu'il n'y en pas avec un nom similaire
             $file2 = $user->getBannerPicture();
             $fileName2 = md5(uniqid()).'.'.$file2->guessExtension();
             $file2->move($this->getParameter('upload_directory'), $fileName2);
@@ -60,12 +66,26 @@ class HomepageController extends AbstractController
 
             $mailer->send($message);
         }
+        $loggedUser=$tokenStorage->getToken()->getUser();
+        if ($loggedUser != "anon.") {
+/*
+        $loggedUser = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find($userId);
+*/
+            $loggedUser->followers = $this->getDoctrine()
+            ->getRepository(Friend::class)
+            ->findFollowers($loggedUser);
+
+            $loggedUser->followings = $this->getDoctrine()
+            ->getRepository(Friend::class)
+            ->findFollowings($loggedUser);
+        }
+        
 
         return $this->render('homepage.html.twig', array(
-            'user' => $user,
+            'user' => $loggedUser,
             'formRegistration' => $formRegistration->createView(),
         ));
-       
     }
-
 }
