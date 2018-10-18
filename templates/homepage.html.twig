@@ -83,11 +83,12 @@
 
 {% if not compareLikes(app.user, message) %}
   <a href="{{ path('like_message', {'messageId': message.id }) }}" class="tweet-footer-btn LIKE">
+    <i class="octicon octicon-heart" aria-hidden="true"></i><span> {{message.getLikes()|length}}</span>
 {% else %}
   <a href="{{ path('unlike_message', {'messageId': message.id }) }}" class="tweet-footer-btn LIKE">
+    <i class="octicon red octicon-heart" aria-hidden="true"></i><span> {{message.getLikes()|length}}</span>
 {% endif %}
 
-                  <i class="octicon octicon-heart" aria-hidden="true"></i><span> {{message.getLikes()|length}}</span>
                 </a>
               </div>
             </div>

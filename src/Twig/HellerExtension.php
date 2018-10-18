@@ -60,7 +60,6 @@ class HellerExtension extends AbstractExtension
         $messageLikes = $message->getLikes();
 
         foreach($messageLikes as $like){
-            dump($like->getLiker());
             if ($like->getLiker()==$user){
                 return true;
             }

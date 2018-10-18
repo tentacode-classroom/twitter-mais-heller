@@ -80,7 +80,6 @@ class UserFeedController extends AbstractController
         $query = $queryBuilder->getQuery();
         $query->execute();
         $previousUrl = $request->server->get('HTTP_REFERER');
-        dump($previousUrl);
 
         return $this->redirect($previousUrl);
     }
@@ -99,8 +98,6 @@ class UserFeedController extends AbstractController
         $entityManager->persist($friend);
         $entityManager->flush();
         $previousUrl = $request->server->get('HTTP_REFERER');
-        dump($previousUrl);
-
         return $this->redirect($previousUrl);
     }
 
@@ -122,7 +119,6 @@ class UserFeedController extends AbstractController
            $query = $queryBuilder->getQuery();
            $query->execute();
            $previousUrl = $request->server->get('HTTP_REFERER');
-           dump($previousUrl);
    
            return $this->redirect($previousUrl);
     }
@@ -142,7 +138,6 @@ class UserFeedController extends AbstractController
         $entityManager->flush();
         
         $previousUrl = $request->server->get('HTTP_REFERER');
-        dump($previousUrl);
 
         return $this->redirect($previousUrl);
     }
@@ -164,7 +159,6 @@ class UserFeedController extends AbstractController
            $query->execute();
         
         $previousUrl = $request->server->get('HTTP_REFERER');
-        dump($previousUrl);
 
         return $this->redirect($previousUrl);
     }
