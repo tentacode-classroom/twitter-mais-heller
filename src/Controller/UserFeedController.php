@@ -39,8 +39,6 @@ class UserFeedController extends AbstractController
             $message = $formMessage->getData();
             $message->setPostDate(new \DateTime('NOW'));
             $message->setUser($user);
-            $message->setLikes(0);
-            $message->setRetweet(0);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($message);
             $entityManager->flush();
