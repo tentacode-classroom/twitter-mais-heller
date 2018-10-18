@@ -32,9 +32,6 @@ class UserFixtures extends Fixture
         $user1->setBirthday(new \DateTime($date1));
         $user1->addMessage($message1);
 
-
-        
-
         $manager->persist($user1);
         $manager->flush();
     }
