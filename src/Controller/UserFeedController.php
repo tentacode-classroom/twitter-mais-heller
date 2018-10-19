@@ -18,7 +18,7 @@ class UserFeedController extends AbstractController
     /**
      * @Route("/user/{userId}", name="user_feed")
      */
-    public function index(Request $request, TokenStorageInterface $tokenStorage, $userId = 3)
+    public function index(Request $request, TokenStorageInterface $tokenStorage, $userId)
     {
 
         //User qui visite
@@ -64,6 +64,9 @@ class UserFeedController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder1 = $entityManager->createQueryBuilder();
+        $queryBuilder2 = $entityManager->createQueryBuilder();
+        $queryBuilder3 = $entityManager->createQueryBuilder();
         
         $userId = $user->getId();
         $queryBuilder->select('m')
@@ -78,12 +81,25 @@ class UserFeedController extends AbstractController
         if ($id != $userId && $role == "ROLE_USER") {
             return $this->redirect('/');
         }
-        $queryBuilder->delete(Message::class, 'm')
-           ->where('m.id = :id')
-           ->setParameter('id', $messageId);
-        
-        $query = $queryBuilder->getQuery();
+        $queryBuilder1->delete(Likes::class, 'l')
+        ->where('l.messageLiked = :id')
+        ->setParameter('id', $message[0]->getId());
+        $query = $queryBuilder1->getQuery();
         $query->execute();
+
+        $queryBuilder2->delete(Retweet::class, 'r')
+        ->where('r.messageRetweeted = :id')
+        ->setParameter('id', $message[0]->getId());
+        $query = $queryBuilder2->getQuery();
+        $query->execute();        
+
+        $queryBuilder3->delete(Message::class, 'm')
+           ->where('m.id = :id')
+           ->setParameter('id', $message[0]->getId());
+        
+        $query = $queryBuilder3->getQuery();
+        $query->execute();
+        
         $previousUrl = $request->server->get('HTTP_REFERER');
 
         return $this->redirect($previousUrl);

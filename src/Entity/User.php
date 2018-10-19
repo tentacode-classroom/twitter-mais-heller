@@ -296,7 +296,7 @@ class User implements UserInterface, \Serializable
 
     public function __toString()
     {
-        return "yolo";
+        return $this->profileName;
     }
 
     public function addFriend(Friend $friend): self

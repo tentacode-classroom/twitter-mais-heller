@@ -18,13 +18,13 @@ class Retweet
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="retweets")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE"))
      */
     private $retweeter;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="retweets")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE"))
      */
     private $messageRetweeted;
 

@@ -16,6 +16,7 @@ class Message
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * 
      */
     private $id;
 
@@ -35,12 +36,12 @@ class Message
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="messageLiked")
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="messageLiked", cascade={"persist", "remove"})
      */
     private $likes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Retweet", mappedBy="messageRetweeted")
+     * @ORM\OneToMany(targetEntity="App\Entity\Retweet", mappedBy="messageRetweeted", cascade={"persist", "remove"})
      */
     private $retweets;
 

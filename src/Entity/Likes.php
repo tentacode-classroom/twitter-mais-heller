@@ -18,13 +18,13 @@ class Likes
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="likes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $liker;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="likes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $messageLiked;
 
