@@ -25,6 +25,7 @@ class HellerExtension extends AbstractExtension
             new TwigFunction('compareRetweets', [$this, 'compareRetweets']),
             new TwigFunction('getFriendMessages', [$this, 'getFriendMessages']),
             new TwigFunction('getMessages', [$this, 'getMessages']),
+            new TwigFunction('getLastUsers', [$this, 'getLastUsers']),
         ];
     }
 
@@ -102,4 +103,5 @@ class HellerExtension extends AbstractExtension
         
         return $messages;
     }
+    
 }

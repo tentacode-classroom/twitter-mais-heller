@@ -288,7 +288,7 @@ body {
   }
 
 .dropdown-menu{
-  margin-left: -40px;
+  margin-left: -65px;
 }
 
 .formButton{
@@ -363,6 +363,12 @@ body {
 .flex-center {
   display : flex;
   justify-content : center;
+}
+
+.profile-banner{
+  position:absolute;
+  width: 100%;
+  height: 320px;
 }
 
 /*.form_errors {
