@@ -360,6 +360,11 @@ body {
   color: green !important;
 }
 
+.flex-center {
+  display : flex;
+  justify-content : center;
+}
+
 /*.form_errors {
   background-color: rgba(240, 11, 11, 0.4);
   color : white;
