@@ -50,11 +50,17 @@ class UserFeedController extends AbstractController
             
             return $this->redirect($request->getUri());
         }
+
+           $lastUsers = $this->getDoctrine()
+           ->getRepository(User::class)
+           ->findLasts();
+    
    
         return $this->render('UserFeed/index.html.twig', [
         'user' => $user,
         'loggedUser' => $loggedUser,
         'formMessage' => $formMessage->createView(),
+        'lastUsers' => $lastUsers,
         ]);
     }
     /**

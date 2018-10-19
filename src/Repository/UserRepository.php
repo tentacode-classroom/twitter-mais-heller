@@ -46,4 +46,15 @@ class UserRepository extends ServiceEntityRepository
         ;
         return $qb->execute();
     }
+
+    public function findLasts(): array
+    {
+        return $this->createQueryBuilder('u')
+        ->orderBy('u.id', 'DESC')
+        ->setMaxResults(3)
+        ->getQuery()
+        ->getResult()
+        ;
+       
+    }
 }
