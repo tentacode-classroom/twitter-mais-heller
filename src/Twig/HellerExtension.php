@@ -94,10 +94,8 @@ class HellerExtension extends AbstractExtension
                 array_push($retweetArray, $message);
             }
         }
-            dump($retweetArray);
 
         $messages = array_merge($userMessages, $retweetArray);
-            dump(count($messages));
         usort($messages, function ($a, $b) {
             return $a->getPostDate() < $b->getPostDate()  ? 1 : -1;
         });
