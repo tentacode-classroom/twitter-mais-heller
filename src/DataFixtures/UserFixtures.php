@@ -6,6 +6,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\User;
 use App\Entity\Message;
+use App\Entity\Friend;
+use App\Entity\Likes;
+use App\Entity\Retweet;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -106,6 +109,61 @@ class UserFixtures extends Fixture
         $manager->persist($user2);
         $manager->persist($user3);
         $manager->persist($user4);
+
+
+        $friend1 = new Friend();
+        $friend1->setFollower($user4);
+        $friend1->setFollowing($user2);
+
+        $friend2 = new Friend();
+        $friend2->setFollower($user2);
+        $friend2->setFollowing($user3);
+
+        $friend3 = new Friend();
+        $friend3->setFollower($user1);
+        $friend3->setFollowing($user3);
+
+        $friend4 = new Friend();
+        $friend4->setFollower($user1);
+        $friend4->setFollowing($user4);
+
+        $retweet1 = new Retweet();
+        $retweet1->setRetweeter($user4);
+        $retweet1->setMessageRetweeted($message1);
+
+        $retweet2 = new Retweet();
+        $retweet2->setRetweeter($user2);
+        $retweet2->setMessageRetweeted($message2);
+
+        $retweet3 = new Retweet();
+        $retweet3->setRetweeter($user3);
+        $retweet3->setMessageRetweeted($message3);
+
+        $like1 = new Likes();
+        $like1->setLiker($user2);
+        $like1->setMessageLiked($message2);
+
+        $like2 = new Likes();
+        $like2->setLiker($user3);
+        $like2->setMessageLiked($message1);
+
+        $like3 = new Likes();
+        $like3->setLiker($user4);
+        $like3->setMessageLiked($message1);
+
+        $manager->persist($friend1);
+        $manager->persist($friend2);
+        $manager->persist($friend3);
+        $manager->persist($friend4);
+
+        $manager->persist($like1);
+        $manager->persist($like2);
+        $manager->persist($like3);
+
+        $manager->persist($retweet1);
+        $manager->persist($retweet2);
+        $manager->persist($retweet3);
+
         $manager->flush();
     }
 }
