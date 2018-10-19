@@ -112,20 +112,28 @@ class UserFixtures extends Fixture
 
 
         $friend1 = new Friend();
-        $friend1->setFollower($user4);
-        $friend1->setFollowing($user2);
+        $friend1->setFollower($user2);
+        $friend1->setFollowing($user4);
 
         $friend2 = new Friend();
-        $friend2->setFollower($user2);
-        $friend2->setFollowing($user3);
+        $friend2->setFollower($user3);
+        $friend2->setFollowing($user4);
 
         $friend3 = new Friend();
         $friend3->setFollower($user1);
-        $friend3->setFollowing($user3);
+        $friend3->setFollowing($user4);
 
         $friend4 = new Friend();
-        $friend4->setFollower($user1);
-        $friend4->setFollowing($user4);
+        $friend4->setFollower($user3);
+        $friend4->setFollowing($user2);
+
+        $friend5 = new Friend();
+        $friend5->setFollower($user1);
+        $friend5->setFollowing($user2);
+
+        $friend6 = new Friend();
+        $friend6->setFollower($user2);
+        $friend6->setFollowing($user3);
 
         $retweet1 = new Retweet();
         $retweet1->setRetweeter($user4);

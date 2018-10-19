@@ -22,8 +22,6 @@
                 <td>{{ message.id }}</td>
                 <td>{{ message.content }}</td>
                 <td>{{ message.postDate ? message.postDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ message.likes }}</td>
-                <td>{{ message.retweet }}</td>
                 <td>
                     <a href="{{ path('message_show', {'id': message.id}) }}">show</a>
                     <a href="{{ path('message_edit', {'id': message.id}) }}">edit</a>
