@@ -18,7 +18,7 @@ class UserFeedController extends AbstractController
     /**
      * @Route("/user/{userId}", name="user_feed")
      */
-    public function index(Request $request, $userId = 3, TokenStorageInterface $tokenStorage )
+    public function index(Request $request, TokenStorageInterface $tokenStorage, $userId = 3)
     {
 
         //User qui visite

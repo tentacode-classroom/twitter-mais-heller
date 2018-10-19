@@ -59,11 +59,10 @@ class HellerExtension extends AbstractExtension
     public function compareLikes($user, $message)
     {
         $messageLikes = $message->getLikes();
-        foreach($messageLikes as $like){
-                if ($like->getLiker()==$user){
+        foreach ($messageLikes as $like) {
+            if ($like->getLiker()==$user) {
                 return true;
             }
-            
         }
         return false;
     }
@@ -72,8 +71,8 @@ class HellerExtension extends AbstractExtension
     {
         $messageRetweets = $message->getRetweets();
 
-        foreach($messageRetweets as $retweet){
-            if ($retweet->getRetweeter()==$user){
+        foreach ($messageRetweets as $retweet) {
+            if ($retweet->getRetweeter()==$user) {
                 return true;
             }
         }
@@ -81,7 +80,8 @@ class HellerExtension extends AbstractExtension
     }
 
 
-    public function getMessages($user){
+    public function getMessages($user)
+    {
         $userMessages = $user->getMessages()->toArray();
         $userRetweets = $retweets = $user->getRetweets();
 
@@ -89,11 +89,11 @@ class HellerExtension extends AbstractExtension
 
         foreach ($userRetweets as $retweet) {
                 $message = $retweet->getMessageRetweeted();
-                if(!($message->getUser() == $user)){
-                    $message->isRetweeted=true;
-                    array_push($retweetArray, $message);
-                }
+            if (!($message->getUser() == $user)) {
+                $message->isRetweeted=true;
+                array_push($retweetArray, $message);
             }
+        }
             dump($retweetArray);
 
         $messages = array_merge($userMessages, $retweetArray);
