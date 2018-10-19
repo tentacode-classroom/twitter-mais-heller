@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -33,14 +35,20 @@ class Message
     private $user;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="messageLiked")
      */
     private $likes;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Retweet", mappedBy="messageRetweeted")
      */
-    private $retweet;
+    private $retweets;
+
+    public function __construct()
+    {
+        $this->likes = new ArrayCollection();
+        $this->retweets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -83,26 +91,64 @@ class Message
         return $this;
     }
 
-    public function getLikes(): ?int
+    /**
+     * @return Collection|Likes[]
+     */
+    public function getLikes(): Collection
     {
         return $this->likes;
     }
 
-    public function setLikes(?int $likes): self
+    public function addLikes(Likes $likes): self
     {
-        $this->likes = $likes;
+        if (!$this->likes->contains($likes)) {
+            $this->likes[] = $likes;
+            $likes->setMessageLiked($this);
+        }
 
         return $this;
     }
 
-    public function getRetweet(): ?int
+    public function removeLikes(Likes $likes): self
     {
-        return $this->retweet;
+        if ($this->likes->contains($likes)) {
+            $this->likes->removeElement($likes);
+            // set the owning side to null (unless already changed)
+            if ($likes->getMessageLiked() === $this) {
+                $likes->setMessageLiked(null);
+            }
+        }
+
+        return $this;
     }
 
-    public function setRetweet(?int $retweet): self
+    /**
+     * @return Collection|Retweet[]
+     */
+    public function getRetweets(): Collection
     {
-        $this->retweet = $retweet;
+        return $this->retweets;
+    }
+
+    public function addRetweet(Retweet $retweet): self
+    {
+        if (!$this->retweets->contains($retweet)) {
+            $this->retweets[] = $retweet;
+            $retweet->setMessageRetweeted($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRetweet(Retweet $retweet): self
+    {
+        if ($this->retweets->contains($retweet)) {
+            $this->retweets->removeElement($retweet);
+            // set the owning side to null (unless already changed)
+            if ($retweet->getMessageRetweeted() === $this) {
+                $retweet->setMessageRetweeted(null);
+            }
+        }
 
         return $this;
     }

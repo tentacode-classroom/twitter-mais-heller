@@ -10,3 +10,12 @@ La ligne suivante :
 * db_password : le mot de passe qui correspond à l'utilisateur
 * db_name : le nom de la base qui contiendra les tables du projet
 
+#### Pour pouvoir utiliser l'envoi de mail, il faut ajouter la ligne suivante à la fin du fichier **.env**
+
+`MAILER_URL=gmail://example@gmail.com:password@localhost`
+
+Il vous faudra simplement remplacer l'adresse gmail par la votre ainsi que le mot de passe que vous utilisez pour vous connecter à votre boîte mail.
+
+<!> ATTENTION <!> 
+Pour que Google accepte d'envoyer les mails, il faut vous rendre dans les paramètres Google de votre compte > Aller dans "Connexion et Sécurité" > "Applications ayant accès au compte" > Activer le paramètre "Autoriser les applications moins sécurisées"
+<!> sans cette étape l'envoi de mail ne fonctionnera pas <!>

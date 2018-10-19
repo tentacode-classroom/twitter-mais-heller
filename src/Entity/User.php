@@ -60,7 +60,7 @@ class User implements UserInterface, \Serializable
     private $birthday;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user", cascade={"persist"}))
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user", fetch="EAGER", cascade={"persist"}))
      */
     private $messages;
 
@@ -85,9 +85,29 @@ class User implements UserInterface, \Serializable
      */
     private $bannerPicture;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Friend", mappedBy="follower", cascade={"persist", "remove"})
+     */
+    private $follower;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="liker")
+     */
+    private $likes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Retweet", mappedBy="retweeter")
+     */
+    private $retweets;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->following = new ArrayCollection();
+        $this->followers = new ArrayCollection();
+        $this->friend = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->retweets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -274,7 +294,106 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function __toString(){
+    public function __toString()
+    {
         return "yolo";
+    }
+
+    public function addFriend(Friend $friend): self
+    {
+        if (!$this->friend->contains($friend)) {
+            $this->friend[] = $friend;
+        }
+
+        return $this;
+    }
+
+    public function removeFriend(Friend $friend): self
+    {
+        if ($this->friend->contains($friend)) {
+            $this->friend->removeElement($friend);
+        }
+
+        return $this;
+    }
+
+    public function getFollower(): ?Friend
+    {
+        return $this->follower;
+    }
+
+    public function setFollower(?Friend $follower): self
+    {
+        $this->follower = $follower;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newFollower = $follower === null ? null : $this;
+        if ($newFollower !== $follower->getFollower()) {
+            $follower->setFollower($newFollower);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Likes[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Likes $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setLiker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Likes $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getLiker() === $this) {
+                $like->setLiker(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Retweet[]
+     */
+    public function getRetweets(): Collection
+    {
+        return $this->retweets;
+    }
+
+    public function addRetweet(Retweet $retweet): self
+    {
+        if (!$this->retweets->contains($retweet)) {
+            $this->retweets[] = $retweet;
+            $retweet->setRetweeter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRetweet(Retweet $retweet): self
+    {
+        if ($this->retweets->contains($retweet)) {
+            $this->retweets->removeElement($retweet);
+            // set the owning side to null (unless already changed)
+            if ($retweet->getRetweeter() === $this) {
+                $retweet->setRetweeter(null);
+            }
+        }
+
+        return $this;
     }
 }

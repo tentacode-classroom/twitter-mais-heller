@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Heller {% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('registration_success') %}
+        <div class="flash_registration_success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    
+    <h1> Page Inscription </h1>
+    <br>
+        <div class="container_registration"> 
+            {{ form_start(formRegistration) }}
+            {{ form_widget(formRegistration) }}
+            {{ form_end(formRegistration) }}
+        </div>
+    </div>
+
+{% endblock %}

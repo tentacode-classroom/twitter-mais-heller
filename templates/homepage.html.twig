@@ -1,24 +1,131 @@
 {% extends 'base.html.twig' %}
 
-
-
-{% block title %}Heller {% endblock %}
-
+{% block title %}{% endblock %}
 
 {% block body %}
 
-    {% for message in app.flashes('registration_success') %}
-        <div class="flash_registration_success">
-            {{ message }}
-        </div>
-    {% endfor %}
-    
-    <h1> Page Home </h1>
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-    <div class="container_registration"> 
-        {{ form_start(formRegistration) }}
-        {{ form_widget(formRegistration) }}
-        {{ form_end(formRegistration) }}
+    <h1> Actualité de vos amis : </h1>
+    <br>
+
+<div class="no-margin row">
+      <div class="col-3">
+      <div class="profile-background">
+    <div class="container tweet-card">
+	  <!-- User main avatar -->
+      <div class="avatar-container menu-container">
+        <div class="avatar">
+            <img src="{{ asset('/uploads/' ~ user.ProfilePicture) }}">
+        </div>
+      </div>
+       <ul class="home-info row tweet-list">
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Tweets</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.messages|length}}</span>
+              </a>
+            </li>
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Following</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.followings|length}}</span>
+              </a>
+            </li>
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Followers</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.followers|length}}</span>
+              </a>
+            </li>
+            <li class="profile-stats">
+              <a class="no-padding">
+                <span class="profile-stats-item profile-stats-item-label">Likes</span>
+                <span class="profile-stats-item profile-stats-item-number">{{user.getLikes()|length}}</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+</div>
+      </div>
+
+      <div class="col-6">
+        <ol class="tweet-list menu-list">
+
+        {% if getFriendMessages(app.user, user.followings) is empty %}
+        Aucune actualité à afficher !
+        {% endif %}
+{% for message in getFriendMessages(app.user, user.followings) %}
+          <li class="tweet-card">
+            <div class="tweet-content">
+              <div class="tweet-header">
+                <span class="fullname">
+                  <a href="/user/{{message.user.id}}">{{message.user.ProfileName}}</a>
+                </span>
+                
+                <span class="tweet-time">- {{message.PostDate|date('Y-m-d')}}</span>
+              </div>
+              <a>
+                <img class="tweet-card-avatar" src="{{ asset('/uploads/' ~ user.ProfilePicture) }}" alt="">
+              </a>
+              <div class="tweet-text">
+                <p class="" data-aria-label-part="0">{{message.content}}
+                </p>
+              </div>
+              <div class="tweet-footer">
+                <a class="tweet-footer-btn">
+                  <i class="octicon octicon-comment" aria-hidden="true"></i><span> 0</span>
+                </a>
+{% if not compareRetweets(app.user, message) %}
+  <a href="{{ path('retweet_message', {'messageId': message.id }) }}" class="tweet-footer-btn RT">
+    <i class="octicon octicon-sync" aria-hidden="true"></i><span> {{message.getRetweets()|length}}</span>
+{% else %}
+  <a href="{{ path('unretweet_message', {'messageId': message.id }) }}" class="tweet-footer-btn RT">
+    <i class="octicon green octicon-sync" aria-hidden="true"></i><span class="green"> {{message.getRetweets()|length}}</span>
+{% endif %}
+ </a>
+
+{% if not compareLikes(app.user, message) %}
+  <a href="{{ path('like_message', {'messageId': message.id }) }}" class="tweet-footer-btn LIKE">
+    <i class="octicon octicon-heart" aria-hidden="true"></i><span> {{message.getLikes()|length}}</span>
+{% else %}
+  <a href="{{ path('unlike_message', {'messageId': message.id }) }}" class="tweet-footer-btn LIKE">
+    <i class="octicon red octicon-heart" aria-hidden="true"></i><span class="red"> {{message.getLikes()|length}}</span>
+{% endif %}
+
+                </a>
+              </div>
+            </div>
+          </li>
+    {% endfor %}
+    </ol>
+    </div>
     </div>
 
+    {% else %}
+
+
+    <div class="jumbotron text-center">
+        <h1> Bienvenue sur Twitter Heller</h1>
+    </div>
+
+    <div class="row">
+        <div class="col lg-2 m-5"></div>
+        <div class=" col lg-4">
+            <a href="/registration">
+                <button type="button" class="btn btn-lg ">
+                    Inscription
+                </button>
+            </a>
+        </div>
+        <div class="col lg-5">
+            <a href="/login">
+                <button type="button" class="btn btn-lg">
+                    Connexion
+                </button>
+            </a>
+        </div>
+        <div class="col lg-1"></div>
+    </div>
+    {% endif %}
 {% endblock %}
