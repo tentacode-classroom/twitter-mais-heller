@@ -97,7 +97,7 @@ class UserFeedController extends AbstractController
         ->where('r.messageRetweeted = :id')
         ->setParameter('id', $message[0]->getId());
         $query = $queryBuilder2->getQuery();
-        $query->execute();        
+        $query->execute();
 
         $queryBuilder3->delete(Message::class, 'm')
            ->where('m.id = :id')

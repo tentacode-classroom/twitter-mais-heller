@@ -103,5 +103,4 @@ class HellerExtension extends AbstractExtension
         
         return $messages;
     }
-    
 }
