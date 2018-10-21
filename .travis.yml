@@ -11,6 +11,6 @@ before-script:
   - composer install --no-interaction
 
 script:
-    - sudo apt-get update -y
-    - sudo apt-get upgrade -y
-    - bin/console app:install
+  - sudo apt-get update -y
+  - sudo apt-get upgrade -y
+  - bin/console app:install
