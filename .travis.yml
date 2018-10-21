@@ -9,7 +9,5 @@ before-install:
 install:
   - composer install --no-interaction
   - composer update
-  - php bin/console app:install
 
 script:
-  - vendor/bin/phpunit  
