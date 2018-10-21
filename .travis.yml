@@ -12,3 +12,4 @@ install:
     - sudo apt-get upgrade -y
     - composer i
     - bin/console app:install
+    
