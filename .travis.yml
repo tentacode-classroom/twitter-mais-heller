@@ -1,8 +1,16 @@
 language: php
 php:
  - 7.2.10
+- hhvm # on Trusty only
+- nightly
+
+addons:
+  mariadb: '10.1.26'
+
 before-script:
   - composer install --no-interaction
 
 script:
-  - vendor/bin/phpunit  
+    - sudo apt-get update -y
+    - sudo apt-get upgrade -y
+    - bin/console app:install
