@@ -1,8 +1,6 @@
 language: php
 php:
  - 7.2.10
-- hhvm # on Trusty only
-- nightly
 
 before-install:
   - composer install --no-interaction
