@@ -4,6 +4,9 @@ php:
 - hhvm # on Trusty only
 - nightly
 
+before-script:
+  - composer install --no-interaction
+
 addons:
   mariadb: '10.1.26'
 
@@ -12,4 +15,3 @@ install:
     - sudo apt-get upgrade -y
     - composer i
     - bin/console app:install
-    
