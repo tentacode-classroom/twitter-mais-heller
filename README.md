@@ -1,4 +1,5 @@
 # twitter-mais-heller
+[![Build Status](https://travis-ci.org/tentacode-classroom/twitter-mais-heller.svg?branch=master)](https://travis-ci.org/tentacode-classroom/twitter-mais-heller)
 
 # Configuration BDD
 
