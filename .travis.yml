@@ -1,6 +1,8 @@
 language: php
 php:
  - 7.2.10
+- hhvm # on Trusty only
+- nightly
 
 addons:
   mariadb: '10.1.26'
