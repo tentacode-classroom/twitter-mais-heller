@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Process;
 
-class InstallCommand extends Command
+class CommandInstall extends Command
 {
     protected static $defaultName = 'app:install';
     protected function configure()
