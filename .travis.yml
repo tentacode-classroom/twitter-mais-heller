@@ -7,10 +7,10 @@ php:
 addons:
   mariadb: '10.1.26'
 
-before-script:
+before-install:
   - composer install --no-interaction
 
-script:
+install:
   - sudo apt-get update -y
   - sudo apt-get upgrade -y
   - bin/console app:install
