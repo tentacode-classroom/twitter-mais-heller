@@ -1,15 +1,27 @@
 # twitter-mais-heller
 [![Build Status](https://travis-ci.org/tentacode-classroom/twitter-mais-heller.svg?branch=master)](https://travis-ci.org/tentacode-classroom/twitter-mais-heller)
 
-# Configuration BDD
 
-##### Pour pouvoir lancer l'application il faut configurer sa base de données dans le fichier **.env** à la racine du projet 
+## Installation
 
-La ligne suivante : 
-`DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name`
-* db_user : l'identifiant de connexion à votre BDD
-* db_password : le mot de passe qui correspond à l'utilisateur
-* db_name : le nom de la base qui contiendra les tables du projet
+Ce projet nécessite PHP 7.2, Composer et MariaDB
+
+### Cloner le projet
+Placez vous dans le repertoire parent puis executez :
+```bash
+clone git@github.com:tentacode-classroom/twitter-mais-heller.git
+```
+
+### Installer composer et ses dépendances :
+```bash
+composer i
+```
+
+### Executer la commande d'installation dans votre projet
+```bash
+php bin/console app:install
+```
+Note : Le programme timeout lorsque le serveur est lancé mais le projet est fonctionnel 
 
 #### Pour pouvoir utiliser l'envoi de mail, il faut ajouter la ligne suivante à la fin du fichier **.env**
 

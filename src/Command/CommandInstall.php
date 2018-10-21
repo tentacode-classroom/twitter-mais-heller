@@ -126,7 +126,7 @@ class CommandInstall extends Command
         $io->newLine(4);
         $io->section('Run the server');
         $process = new Process('php bin/console server:start');
-        // $process->setTimeout(300);
+        $process->setTimeout(25);
         $process->mustRun(function ($type, $buffer) use ($io, $output) {
             $output->writeln('> '.$buffer);
         });
