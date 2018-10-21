@@ -4,9 +4,6 @@ php:
 - hhvm # on Trusty only
 - nightly
 
-addons:
-  mariadb: '10.1.26'
-
 before-install:
   - composer install --no-interaction
 
