@@ -6,8 +6,6 @@ before-install:
   - composer install --no-interaction
 
 install:
-  - sudo apt-get update
-  - sudo apt-get upgrade
   - bin/console app:install
 
 script:
